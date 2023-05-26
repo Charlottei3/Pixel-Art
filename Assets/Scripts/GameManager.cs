@@ -6,9 +6,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+    public bool isClick = false;
     public Texture2D texture;
     [SerializeField] GameObject objPrefab;
-    Pixel[,] Pixels;
+    // [SerializeField] private Camera _cam;
+    [SerializeField] private Pixel[,] Pixels;
     Camera Camera;
     public float zoomMultiplier = 2;
     public float defaultFov = 90;
@@ -26,16 +29,27 @@ public class GameManager : MonoBehaviour
     public Transform _trs;
     void Awake()
     {
+        if (Instance != null)
+        {
+            DestroyImmediate(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         Camera = Camera.main;
-
         CreatePixelMap();
+
         //   CreateColorSwatches();
     }
+
 
     void CreatePixelMap()
     {
         Color[] colors = texture.GetPixels();
-        
+        Camera.transform.position = new Vector3((float)texture.width / 2, (float)texture.height / 2, -10);
+
         Pixels = new Pixel[texture.width, texture.height];
 
         for (int x = 0; x < texture.width; x++)
@@ -49,7 +63,7 @@ public class GameManager : MonoBehaviour
                     go.transform.name = $"square{x}-{y}";
                     Pixels[x, y] = go.GetComponent<Pixel>();
 
-                    if (!_allTypeOfColor.ContainsKey(colors[x + y * texture.width]))
+                    if (!_allTypeOfColor.ContainsKey(colors[x + y * texture.width]))//màu mới
                     {
                         _allTypeOfColor.Add(colors[x + y * texture.width], _countColor);
                         _allPixelGroups.Add(_countColor, new List<Pixel>());
@@ -57,7 +71,7 @@ public class GameManager : MonoBehaviour
                         Pixels[x, y]._color = colors[x + y * texture.width];
                         _countColor++;
                     }
-                    else
+                    else//màu cũ
                     {
                         int foundId = _allTypeOfColor.GetValueOrDefault(colors[x + y * texture.width]);
                         _allPixelGroups[foundId].Add(Pixels[x, y]);
@@ -68,6 +82,9 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        Debug.Log(Pixels.Length);
+
+
     }
 
     void CreateColorSwatches()
@@ -93,86 +110,51 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Update()
+    //void Update()
+    //{
+    //    Vector2 mousePos = Camera.ScreenToWorldPoint(Input.mousePosition);
+    //    int x = Mathf.RoundToInt(mousePos.x);
+    //    int y = Mathf.RoundToInt(mousePos.y);
+
+    //    Pixel hoveredPixel = null;
+
+
+    //    if (Input.GetMouseButton(0))
+    //    {
+    //        hoveredPixel = GetPixel(mousePos);
+    //        if (hoveredPixel != null && !hoveredPixel.isFilledIn)
+    //        {
+    //            //chọn đúng
+    //            if (1 > 0/*SelectedColorSwatch != null && SelectedColorSwatch.ID == hoveredPixel.id*/)
+    //            {
+    //                hoveredPixel.Fill();
+    //                //if (CheckIfSelectedComplete())//hoàn thành
+    //                //{
+    //                //    SelectedColorSwatch.SetCompleted();
+    //                //}
+    //            }
+    //            else
+    //            {
+    //                //    hoveredPixel.FillWrong();
+    //            }
+    //        }
+    //    }
+    //}
+    private Pixel GetPixel(Vector2 position)
     {
-        Vector2 mousePos = Camera.ScreenToWorldPoint(Input.mousePosition);
-        int x = Mathf.FloorToInt(mousePos.x);
-        int y = Mathf.FloorToInt(mousePos.y);
-
-        Pixel hoveredPixel = null;
-        if (x >= 0 && x < Pixels.GetLength(0) && y >= 0 && y < Pixels.GetLength(1))
+        if (position.x >= 0 && position.x < Pixels.GetLength(0) && position.y >= 0 && position.y < Pixels.GetLength(1))
         {
-            if (Pixels[x, y] != null)
+            if (Pixels[Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y)] != null)
             {
-                hoveredPixel = Pixels[x, y];
+
+                var Pixel = Pixels[Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.y)];
+                Debug.Log(Pixel.name);
+                return Pixel;
             }
+            else return null;
         }
+        else return null;
 
-     /*   if (Input.GetMouseButtonDown(0))
-        {
-            // Check if we clicked on a color swatch
-            int hitCount = Physics2D.RaycastNonAlloc(mousePos, Vector2.zero, Hits);
-            for (int n = 0; n < hitCount; n++)
-            {
-                if (Hits[n].collider.CompareTag("ColorSwatch"))
-                {
-                    SelectColorSwatch(Hits[n].collider.GetComponent<ColorSwatch>());
-                }
-            }
-        }*/
-
-        /*  if (Input.GetMouseButton(0))
-          {
-              if (hoveredPixel != null && !hoveredPixel.IsFilledIn)
-              {
-                  if (SelectedColorSwatch != null && SelectedColorSwatch.ID == hoveredPixel.ID)
-                  {
-                      hoveredPixel.Fill();
-                      if (CheckIfSelectedComplete())
-                      {
-                          SelectedColorSwatch.SetCompleted();
-                      }
-                  }
-                  else
-                  {
-                      hoveredPixel.FillWrong();
-                  }
-              }
-          }*/
     }
 
-    /*   void SelectColorSwatch(ColorSwatch swatch)
-       {
-           if (SelectedColorSwatch != null)
-           {
-               for (int n = 0; n < PixelGroups[SelectedColorSwatch.ID].Count; n++)
-               {
-                   PixelGroups[SelectedColorSwatch.ID][n].SetSelected(false);
-               }
-
-               SelectedColorSwatch.SetSelected(false);
-           }
-
-           SelectedColorSwatch = swatch;
-           SelectedColorSwatch.SetSelected(true);
-
-           for (int n = 0; n < PixelGroups[SelectedColorSwatch.ID].Count; n++)
-           {
-               PixelGroups[SelectedColorSwatch.ID][n].SetSelected(true);
-           }
-       }
-
-       bool CheckIfSelectedComplete()
-       {
-           if (SelectedColorSwatch != null)
-           {
-               for (int n = 0; n < PixelGroups[SelectedColorSwatch.ID].Count; n++)
-               {
-                   if (PixelGroups[SelectedColorSwatch.ID][n].IsFilledIn == false)
-                       return false;
-               }
-           }
-
-           return true;
-       }*/
 }
