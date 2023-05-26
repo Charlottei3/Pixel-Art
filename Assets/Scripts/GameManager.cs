@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public bool isClick = false;
+    public bool isFirstClickTrue = false;
     public Texture2D texture;
     [SerializeField] GameObject objPrefab;
     // [SerializeField] private Camera _cam;
@@ -110,36 +111,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //void Update()
-    //{
-    //    Vector2 mousePos = Camera.ScreenToWorldPoint(Input.mousePosition);
-    //    int x = Mathf.RoundToInt(mousePos.x);
-    //    int y = Mathf.RoundToInt(mousePos.y);
 
-    //    Pixel hoveredPixel = null;
-
-
-    //    if (Input.GetMouseButton(0))
-    //    {
-    //        hoveredPixel = GetPixel(mousePos);
-    //        if (hoveredPixel != null && !hoveredPixel.isFilledIn)
-    //        {
-    //            //chọn đúng
-    //            if (1 > 0/*SelectedColorSwatch != null && SelectedColorSwatch.ID == hoveredPixel.id*/)
-    //            {
-    //                hoveredPixel.Fill();
-    //                //if (CheckIfSelectedComplete())//hoàn thành
-    //                //{
-    //                //    SelectedColorSwatch.SetCompleted();
-    //                //}
-    //            }
-    //            else
-    //            {
-    //                //    hoveredPixel.FillWrong();
-    //            }
-    //        }
-    //    }
-    //}
     private Pixel GetPixel(Vector2 position)
     {
         if (position.x >= 0 && position.x < Pixels.GetLength(0) && position.y >= 0 && position.y < Pixels.GetLength(1))

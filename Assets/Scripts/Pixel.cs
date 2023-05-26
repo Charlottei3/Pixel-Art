@@ -44,7 +44,8 @@ public class Pixel : MonoBehaviour
     }
     private void OnSliderValueChanged(float value)
     {
-        _colorRen.color = Color.Lerp(new Color(_color.grayscale, _color.grayscale, _color.grayscale), Color.white, value);
+        if (!isFilledIn)
+            _colorRen.color = Color.Lerp(new Color(_color.grayscale, _color.grayscale, _color.grayscale), Color.white, value);
     }
 
     public void Fill()
@@ -64,19 +65,33 @@ public class Pixel : MonoBehaviour
             _colorRen.color = new Color(1, 170 / 255f, 170 / 255f, 1);
         }
     }
+    public bool CheckFill()
+    {
+        //trả về true nếu màu của gameManager trùng màu của pixel này
+        return true;
+    }
     private void OnMouseDown()
     {
+        //in
+        GameManager.Instance.isFirstClickTrue = true;
         GameManager.Instance.isClick = true;
         Fill();
+        //in sai
 
     }
     private void OnMouseUp()
     {
         GameManager.Instance.isClick = false;
+        GameManager.Instance.isFirstClickTrue = false;
     }
     private void OnMouseOver()
     {
-        if (GameManager.Instance.isClick) Fill();
+        //nếu đã click và ban đầu click đúng
+        if (GameManager.Instance.isClick && GameManager.Instance.isFirstClickTrue) Fill();
+        else if (GameManager.Instance.isClick && !GameManager.Instance.isFirstClickTrue)
+        {
+            //di chuyển cam
+        }
     }
 
 
