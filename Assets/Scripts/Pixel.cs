@@ -12,9 +12,9 @@ public class Pixel : MonoBehaviour
     public int id { get; set; }
     public Color _color { get; set; }
 
-    SpriteRenderer _colorRen;
-    SpriteRenderer _lineRen;
-    TextMeshPro _text;
+    [SerializeField] SpriteRenderer _colorRen;
+    [SerializeField] SpriteRenderer _lineRen;
+    [SerializeField] TextMeshPro _text;
     public bool isFilledIn
     {
         get
@@ -31,30 +31,43 @@ public class Pixel : MonoBehaviour
     }
     void Awake()
     {
-        _lineRen = transform.Find("Line").GetComponent<SpriteRenderer>();
-        _colorRen = transform.Find("Color").GetComponent<SpriteRenderer>();
-        _text = transform.Find("Text").GetComponent<TextMeshPro>();
-        _slider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
+        /* _lineRen = transform.Find("Line").GetComponent<SpriteRenderer>();
+         _colorRen = transform.Find("Color").GetComponent<SpriteRenderer>();
+         _text = transform.Find("Text").GetComponent<TextMeshPro>();
+         _slider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();*/
     }
     private void Start()
     {
         _text.text = id.ToString();
-        _slider.onValueChanged.AddListener(OnSliderValueChanged);
+        //  _slider.onValueChanged.AddListener(OnSliderValueChanged);
 
     }
     private void OnSliderValueChanged(float value)
     {
+
         _colorRen.color = Color.Lerp(new Color(_color.grayscale, _color.grayscale, _color.grayscale), Color.white, value);
     }
 
     public void Fill()
     {
-        if (!isFilledIn)
+        /*  if (!isFilledIn)
+          {*/
+        //_colorRen.color = GameManager.Instance.colorPixel;
+        //   _lineRen.color = _color;
+        // _text.text = "";
+        Debug.Log(isFilledIn);
+        // }
+
+        if (_color == GameManager.Instance.colorPixel)
         {
-            _colorRen.color = _color;
-            _lineRen.color = _color;
+            _colorRen.color = GameManager.Instance.colorPixel;
             _text.text = "";
         }
+        else
+        {
+            _colorRen.color = GameManager.Instance.colorPixel;
+        }
+
     }
 
     public void FillWrong()

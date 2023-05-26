@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.isClick) return;
         float scrollCamera;
 
         scrollCamera = Input.GetAxis("Mouse ScrollWheel");
