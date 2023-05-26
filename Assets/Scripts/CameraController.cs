@@ -9,15 +9,17 @@ public class CameraController : MonoBehaviour
     private float zoomFactor = 10f;
     private float zoomSpeed = 20f;
 
-    private float moveSpeed = 20f; 
+    private float moveSpeed = 1f; 
     private float smoothTime = 0.2f; 
 
     private Vector3 lastMousePosition;
     private Vector3 currentVelocity;
+    private Vector3 initialCameraPosition;
     void Start()
     {
         cam = Camera.main;
         targetZoom = cam.orthographicSize;
+        initialCameraPosition = transform.position;
     }
     
     void Update()
@@ -26,9 +28,8 @@ public class CameraController : MonoBehaviour
 
         scrollCamera = Input.GetAxis("Mouse ScrollWheel");
         targetZoom -= scrollCamera * zoomFactor;
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, zoomSpeed * Time.deltaTime);
 
-        // Di chuyển camera khi nhấp chuột trái
         if (Input.GetMouseButtonDown(0))
         {
             lastMousePosition = Input.mousePosition;
@@ -38,7 +39,13 @@ public class CameraController : MonoBehaviour
             Vector3 deltaMousePosition = Input.mousePosition - lastMousePosition;
             Vector3 targetPosition = transform.position + new Vector3(-deltaMousePosition.x, -deltaMousePosition.y, 0) * moveSpeed * Time.deltaTime;
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
+
+            targetPosition.x = Mathf.Clamp(targetPosition.x, initialCameraPosition.x , initialCameraPosition.x + 10f); 
+            targetPosition.y = Mathf.Clamp(targetPosition.y, initialCameraPosition.y , initialCameraPosition.y + 10f); 
+           
             lastMousePosition = Input.mousePosition;
+
+            transform.position = targetPosition;
         }
     }
     

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public Texture2D Texture;
     [SerializeField] GameObject objPrefab;
+    [SerializeField] GameObject objColor;
     Pixel[,] Pixels;
     Camera Camera;
     public float zoomMultiplier = 2;
@@ -22,13 +23,13 @@ public class GameManager : MonoBehaviour
 
     RaycastHit2D[] Hits = new RaycastHit2D[1];
     ColorSwatch SelectedColorSwatch;
-    public Transform _trs;
+    public Transform _trs,_trsColor;
     void Awake()
     {
         Camera = Camera.main;
 
         CreatePixelMap();
-        //   CreateColorSwatches();
+        //CreateColorSwatches();
     }
 
     void CreatePixelMap()
@@ -36,14 +37,14 @@ public class GameManager : MonoBehaviour
         Color[] colors = Texture.GetPixels();
 
         Pixels = new Pixel[Texture.width, Texture.height];
-
         for (int x = 0; x < Texture.width; x++)
         {
             for (int y = 0; y < Texture.height; y++)
             {
                 if (colors[x + y * Texture.width].a != 0)
                 {
-                    GameObject go = /*GameObject.Instantiate(Resources.Load("Pixel") as GameObject);*/Instantiate(objPrefab,_trs);
+                    GameObject go = Instantiate(objPrefab,_trs);
+                    //GameObject go = GameObject.Instantiate(Resources.Load("Pixel") as GameObject);
                     go.transform.position = new Vector3(x, y);
 
                     int id = ID;
@@ -74,7 +75,8 @@ public class GameManager : MonoBehaviour
     {
         foreach (KeyValuePair<Color, int> kvp in Colors)
         {
-            GameObject go = GameObject.Instantiate(Resources.Load("ColorSwatch") as GameObject);
+            //GameObject go = GameObject.Instantiate(Resources.Load("ColorSwatch") as GameObject);
+            GameObject go = Instantiate(objColor,_trsColor);
 
             float offset = 1.2f;
             go.transform.position = new Vector2(kvp.Value * 2 * offset, -3);
@@ -119,7 +121,7 @@ public class GameManager : MonoBehaviour
                        SelectColorSwatch(Hits[n].collider.GetComponent<ColorSwatch>());
                    }
                }
-           }*/
+           }
 
         /*  if (Input.GetMouseButton(0))
           {
