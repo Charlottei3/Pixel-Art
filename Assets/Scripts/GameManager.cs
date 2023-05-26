@@ -1,71 +1,70 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using Unity.Mathematics;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Texture2D Texture;
+    public Texture2D texture;
     [SerializeField] GameObject objPrefab;
-    [SerializeField] GameObject objColor;
     Pixel[,] Pixels;
     Camera Camera;
     public float zoomMultiplier = 2;
     public float defaultFov = 90;
     public float zoomDuration = 2;
 
-    int ID = 1;
-    Dictionary<Color, int> Colors = new Dictionary<Color, int>();
+    int _countColor = 1;
+    Dictionary<Color, int> _allTypeOfColor = new Dictionary<Color, int>();
+
     List<ColorSwatch> ColorSwatches = new List<ColorSwatch>();
 
-    Dictionary<int, List<Pixel>> PixelGroups = new Dictionary<int, List<Pixel>>();
+    Dictionary<int, List<Pixel>> _allPixelGroups = new Dictionary<int, List<Pixel>>();
 
     RaycastHit2D[] Hits = new RaycastHit2D[1];
     ColorSwatch SelectedColorSwatch;
-    public Transform _trs,_trsColor;
+    public Transform _trs;
     void Awake()
     {
         Camera = Camera.main;
 
         CreatePixelMap();
-        //CreateColorSwatches();
+        //   CreateColorSwatches();
     }
 
     void CreatePixelMap()
     {
-        Color[] colors = Texture.GetPixels();
+        Color[] colors = texture.GetPixels();
 
-        Pixels = new Pixel[Texture.width, Texture.height];
-        for (int x = 0; x < Texture.width; x++)
+        Pixels = new Pixel[texture.width, texture.height];
+
+        for (int x = 0; x < texture.width; x++)
         {
-            for (int y = 0; y < Texture.height; y++)
+            for (int y = 0; y < texture.height; y++)
             {
-                if (colors[x + y * Texture.width].a != 0)
+                if (colors[x + y * texture.width].a != 0)
                 {
-                    GameObject go = Instantiate(objPrefab,_trs);
-                    //GameObject go = GameObject.Instantiate(Resources.Load("Pixel") as GameObject);
+                    GameObject go = Instantiate(objPrefab, _trs);
                     go.transform.position = new Vector3(x, y);
-
-                    int id = ID;
-                    if (Colors.ContainsKey(colors[x + y * Texture.width]))
-                    {
-                        id = Colors[colors[x + y * Texture.width]];
-                    }
-                    else
-                    {
-                        Colors.Add(colors[x + y * Texture.width], ID);
-                        ID++;
-                    }
-
+                    go.transform.name = $"square{x}-{y}";
                     Pixels[x, y] = go.GetComponent<Pixel>();
-                    //Pixels[x, y].SetData(colors[x + y * Texture.width], id);
 
-                    if (!PixelGroups.ContainsKey(id))
+                    if (!_allTypeOfColor.ContainsKey(colors[x + y * texture.width]))//màu mới
                     {
-                        PixelGroups.Add(id, new List<Pixel>());
+                        _allTypeOfColor.Add(colors[x + y * texture.width], _countColor);
+                        _allPixelGroups.Add(_countColor, new List<Pixel>());
+                        Pixels[x, y].id = _countColor;
+                        Pixels[x, y]._color = colors[x + y * texture.width];
+                        _countColor++;
                     }
-                    PixelGroups[id].Add(Pixels[x, y]);
+                    else//màu cũ
+                    {
+                        int foundId = _allTypeOfColor.GetValueOrDefault(colors[x + y * texture.width]);
+                        _allPixelGroups[foundId].Add(Pixels[x, y]);
+                        Pixels[x, y].id = foundId;
+                        Pixels[x, y]._color = colors[x + y * texture.width];
+                    }
+
                 }
             }
         }
@@ -73,10 +72,9 @@ public class GameManager : MonoBehaviour
 
     void CreateColorSwatches()
     {
-        foreach (KeyValuePair<Color, int> kvp in Colors)
+        foreach (KeyValuePair<Color, int> kvp in _allTypeOfColor)
         {
-            //GameObject go = GameObject.Instantiate(Resources.Load("ColorSwatch") as GameObject);
-            GameObject go = Instantiate(objColor,_trsColor);
+            GameObject go = GameObject.Instantiate(Resources.Load("ColorSwatch") as GameObject);
 
             float offset = 1.2f;
             go.transform.position = new Vector2(kvp.Value * 2 * offset, -3);
@@ -121,7 +119,7 @@ public class GameManager : MonoBehaviour
                        SelectColorSwatch(Hits[n].collider.GetComponent<ColorSwatch>());
                    }
                }
-           }
+           }*/
 
         /*  if (Input.GetMouseButton(0))
           {
