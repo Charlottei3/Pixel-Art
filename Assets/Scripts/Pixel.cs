@@ -25,11 +25,13 @@ public class Pixel : MonoBehaviour
     private void Start()
     {
         _text.text = id.ToString();
-        _slider.onValueChanged.AddListener(OnSliderValueChanged);
+        //_slider.onValueChanged.AddListener(OnSliderValueChanged);
 
     }
     private void OnSliderValueChanged(float value)
     {
         _colorRen.color = Color.Lerp(new Color(_color.grayscale, _color.grayscale, _color.grayscale), Color.white, value);
     }
+
+
 }

@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     void CreatePixelMap()
     {
         Color[] colors = texture.GetPixels();
-
+        
         Pixels = new Pixel[texture.width, texture.height];
 
         for (int x = 0; x < texture.width; x++)
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
                     go.transform.name = $"square{x}-{y}";
                     Pixels[x, y] = go.GetComponent<Pixel>();
 
-                    if (!_allTypeOfColor.ContainsKey(colors[x + y * texture.width]))//màu mới
+                    if (!_allTypeOfColor.ContainsKey(colors[x + y * texture.width]))
                     {
                         _allTypeOfColor.Add(colors[x + y * texture.width], _countColor);
                         _allPixelGroups.Add(_countColor, new List<Pixel>());
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
                         Pixels[x, y]._color = colors[x + y * texture.width];
                         _countColor++;
                     }
-                    else//màu cũ
+                    else
                     {
                         int foundId = _allTypeOfColor.GetValueOrDefault(colors[x + y * texture.width]);
                         _allPixelGroups[foundId].Add(Pixels[x, y]);
@@ -108,18 +108,18 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        /*   if (Input.GetMouseButtonDown(0))
-           {
-               // Check if we clicked on a color swatch
-               int hitCount = Physics2D.RaycastNonAlloc(mousePos, Vector2.zero, Hits);
-               for (int n = 0; n < hitCount; n++)
-               {
-                   if (Hits[n].collider.CompareTag("ColorSwatch"))
-                   {
-                       SelectColorSwatch(Hits[n].collider.GetComponent<ColorSwatch>());
-                   }
-               }
-           }*/
+     /*   if (Input.GetMouseButtonDown(0))
+        {
+            // Check if we clicked on a color swatch
+            int hitCount = Physics2D.RaycastNonAlloc(mousePos, Vector2.zero, Hits);
+            for (int n = 0; n < hitCount; n++)
+            {
+                if (Hits[n].collider.CompareTag("ColorSwatch"))
+                {
+                    SelectColorSwatch(Hits[n].collider.GetComponent<ColorSwatch>());
+                }
+            }
+        }*/
 
         /*  if (Input.GetMouseButton(0))
           {
