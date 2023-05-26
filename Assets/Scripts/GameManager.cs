@@ -8,9 +8,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public bool isClick = false;
-    public bool isFirstClickTrue = false;
+
     public Texture2D texture;
-    [SerializeField] GameObject objPrefab;
+    [SerializeField] Pixel objPrefab;
+    [SerializeField] ColorRenPixel colorPrefabs;
     // [SerializeField] private Camera _cam;
     [SerializeField] private Pixel[,] Pixels;
     Camera Camera;
@@ -21,13 +22,14 @@ public class GameManager : MonoBehaviour
     int _countColor = 1;
     Dictionary<Color, int> _allTypeOfColor = new Dictionary<Color, int>();
 
-    List<ColorSwatch> ColorSwatches = new List<ColorSwatch>();
+    List<ColorRenPixel> ColorSwatches = new List<ColorRenPixel>();
 
     Dictionary<int, List<Pixel>> _allPixelGroups = new Dictionary<int, List<Pixel>>();
 
     RaycastHit2D[] Hits = new RaycastHit2D[1];
     ColorSwatch SelectedColorSwatch;
-    public Transform _trs;
+    public Transform _trs, _colorButonParen;
+    public Color colorPixel;
     void Awake()
     {
         if (Instance != null)
@@ -42,11 +44,11 @@ public class GameManager : MonoBehaviour
         Camera = Camera.main;
         CreatePixelMap();
 
-        //   CreateColorSwatches();
+        CreateColorSwatches();
     }
 
 
-    void CreatePixelMap()
+    public void CreatePixelMap()
     {
         Color[] colors = texture.GetPixels();
         Camera.transform.position = new Vector3((float)texture.width / 2, (float)texture.height / 2, -10);
@@ -59,10 +61,10 @@ public class GameManager : MonoBehaviour
             {
                 if (colors[x + y * texture.width].a != 0)
                 {
-                    GameObject go = Instantiate(objPrefab, _trs);
-                    go.transform.position = new Vector3(x, y);
-                    go.transform.name = $"square{x}-{y}";
-                    Pixels[x, y] = go.GetComponent<Pixel>();
+                    Pixel pixel = Instantiate(objPrefab, _trs);
+                    pixel.transform.position = new Vector3(x, y);
+                    pixel.transform.name = $"square{x}-{y}";
+                    Pixels[x, y] = pixel;
 
                     if (!_allTypeOfColor.ContainsKey(colors[x + y * texture.width]))//màu mới
                     {
@@ -83,8 +85,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log(Pixels.Length);
-
 
     }
 
@@ -92,15 +92,22 @@ public class GameManager : MonoBehaviour
     {
         foreach (KeyValuePair<Color, int> kvp in _allTypeOfColor)
         {
-            GameObject go = GameObject.Instantiate(Resources.Load("ColorSwatch") as GameObject);
+            ColorRenPixel colorRenPixel = Instantiate(colorPrefabs, _colorButonParen);
 
             float offset = 1.2f;
-            go.transform.position = new Vector2(kvp.Value * 2 * offset, -3);
-            ColorSwatch colorswatch = go.GetComponent<ColorSwatch>();
-            colorswatch.SetData(kvp.Value, kvp.Key);
-
-            ColorSwatches.Add(colorswatch);
+            //go.transform.position = new Vector2(kvp.Value * 2 * offset, -3);
+            //ColorSwatch colorswatch = go.GetComponent<ColorSwatch>();
+            colorRenPixel.SetData(kvp.Value, kvp.Key);
+            colorRenPixel.getButon().onClick.AddListener(() => SetColor(colorRenPixel));
+            ColorSwatches.Add(colorRenPixel);
         }
+
+        colorPixel = ColorSwatches[0].Color ;
+    }
+
+    private void SetColor(ColorRenPixel colorRenPixel)
+    {
+        this.colorPixel = colorRenPixel.Color;
     }
 
     void DeselectAllColorSwatches()
@@ -111,7 +118,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //void Update()
+    //{
+    //    Vector2 mousePos = Camera.ScreenToWorldPoint(Input.mousePosition);
+    //    int x = Mathf.RoundToInt(mousePos.x);
+    //    int y = Mathf.RoundToInt(mousePos.y);
 
+    //    Pixel hoveredPixel = null;
+
+
+    //    if (Input.GetMouseButton(0))
+    //    {
+    //        hoveredPixel = GetPixel(mousePos);
+    //        if (hoveredPixel != null && !hoveredPixel.isFilledIn)
+    //        {
+    //            //chọn đúng
+    //            if (1 > 0/*SelectedColorSwatch != null && SelectedColorSwatch.ID == hoveredPixel.id*/)
+    //            {
+    //                hoveredPixel.Fill();
+    //                //if (CheckIfSelectedComplete())//hoàn thành
+    //                //{
+    //                //    SelectedColorSwatch.SetCompleted();
+    //                //}
+    //            }
+    //            else
+    //            {
+    //                //    hoveredPixel.FillWrong();
+    //            }
+    //        }
+    //    }
+    //}
     private Pixel GetPixel(Vector2 position)
     {
         if (position.x >= 0 && position.x < Pixels.GetLength(0) && position.y >= 0 && position.y < Pixels.GetLength(1))

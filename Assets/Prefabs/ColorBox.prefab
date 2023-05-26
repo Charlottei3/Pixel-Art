@@ -93,10 +93,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 524889280587888098}
-  - component: {fileID: -936503352801553101}
-  - component: {fileID: -3374841822277481929}
+  - component: {fileID: 8544983428071158881}
   m_Layer: 0
-  m_Name: Square
+  m_Name: ColorBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +119,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-936503352801553101
+--- !u!114 &8544983428071158881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,38 +128,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1429281108641983988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ee9207ebb58f4d4ea9db2a4f34cb4f8, type: 3}
+  m_Script: {fileID: 11500000, guid: fd32cea72274afe40a6753a2209ab182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colorRen: {fileID: 2495059292568899415}
-  _lineRen: {fileID: 2756800854752947893}
-  _text: {fileID: 1966851510748308578}
---- !u!61 &-3374841822277481929
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1429281108641983988}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  text: {fileID: 1966851510748308578}
 --- !u!1 &1885490173653849773
 GameObject:
   m_ObjectHideFlags: 0
