@@ -9,12 +9,13 @@ public class CameraController : MonoBehaviour
     public Slider _slider;
 
     private Vector3 StartTouch;
+    private Vector3 limitCam;
     void Start()
     {
         cam = Camera.main;
-        //targetZoom = cam.orthographicSize;
+
         _slider.onValueChanged.AddListener(OnSliderValueChanged);
-        //  frameLimitCam = transform.position;
+        limitCam = transform.position;
     }
 
     void Update()
@@ -26,8 +27,13 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButton(0) && !GameManager.Instance.isFirstClick)
         {
             Vector3 direction = StartTouch - cam.ScreenToWorldPoint(Input.mousePosition);
-            cam.transform.position += direction;
 
+            Vector3 frameLimit = transform.position + direction;
+            frameLimit.x = Mathf.Clamp(frameLimit.x, limitCam.x -5f, limitCam.x + 5f);
+            frameLimit.y = Mathf.Clamp(frameLimit.y, limitCam.y -5f, limitCam.y + 5f);
+
+            cam.transform.position += direction;
+            transform.position = frameLimit;
         }
         _slider.value += Input.GetAxis("Mouse ScrollWheel");
 

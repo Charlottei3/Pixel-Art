@@ -88,11 +88,9 @@ public class GameManager : MonoBehaviour
                         Pixels[x, y].id = foundId;
                         Pixels[x, y]._colorTrue = colors[x + y * texture.width];
                     }
-
                 }
             }
         }
-
     }
 
     void CreateColorSwatches()
@@ -107,7 +105,6 @@ public class GameManager : MonoBehaviour
 
             ColorSwatches.Add(colorRenPixel);
         }
-
         // colorNow = ColorSwatches[0].Color;
     }
 
@@ -133,11 +130,7 @@ public class GameManager : MonoBehaviour
             {
                 _list[i]._highlight.enabled = turn;
             }
-
-
         }
     }
-
-
 
 }
