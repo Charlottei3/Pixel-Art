@@ -11,7 +11,7 @@ public class ColorRenPixel : MonoBehaviour
     public int Id;
     bool Completed;
     bool Selected;
-    public Color Color {  get;  set; }
+    public Color Color { get; set; }
     public Button getButon()
     {
         return this.GetComponent<Button>();
@@ -39,4 +39,5 @@ public class ColorRenPixel : MonoBehaviour
             }
         }
     }
+
 }

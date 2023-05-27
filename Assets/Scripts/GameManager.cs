@@ -2,34 +2,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public Color colorNow { get; set; }
+    public int idNow { get; set; }
     public bool isClick = false;
-
+    public bool isFirstClick = false;
+    public bool isChosseFirstColor = false;
+    public float camMaxsize;
+    public Transform _trs, _colorButonParen;
     public Texture2D texture;
     [SerializeField] Pixel objPrefab;
     [SerializeField] ColorRenPixel colorPrefabs;
-    // [SerializeField] private Camera _cam;
     [SerializeField] private Pixel[,] Pixels;
+    [SerializeField] public Slider slider;
+    [SerializeField] List<Pixel> _list;
+    [SerializeField] private int _countColor = 1;
     Camera Camera;
     public float zoomMultiplier = 2;
     public float defaultFov = 90;
     public float zoomDuration = 2;
-
-    int _countColor = 1;
-    Dictionary<Color, int> _allTypeOfColor = new Dictionary<Color, int>();
-
+    private Dictionary<Color, int> _allTypeOfColor = new Dictionary<Color, int>();
+    public Dictionary<int, List<Pixel>> _allPixelGroups = new Dictionary<int, List<Pixel>>();
     List<ColorRenPixel> ColorSwatches = new List<ColorRenPixel>();
 
-    Dictionary<int, List<Pixel>> _allPixelGroups = new Dictionary<int, List<Pixel>>();
 
-    RaycastHit2D[] Hits = new RaycastHit2D[1];
-    ColorSwatch SelectedColorSwatch;
-    public Transform _trs, _colorButonParen;
-    public Color colorPixel;
+
     void Awake()
     {
         if (Instance != null)
@@ -42,16 +46,18 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         Camera = Camera.main;
+        Application.targetFrameRate = 60;
         CreatePixelMap();
 
         CreateColorSwatches();
     }
 
-
     public void CreatePixelMap()
     {
         Color[] colors = texture.GetPixels();
         Camera.transform.position = new Vector3((float)texture.width / 2, (float)texture.height / 2, -10);
+        camMaxsize = Mathf.Max(texture.width, texture.height) + 3;
+        Camera.GetComponent<Camera>().orthographicSize = camMaxsize;
 
         Pixels = new Pixel[texture.width, texture.height];
 
@@ -70,8 +76,9 @@ public class GameManager : MonoBehaviour
                     {
                         _allTypeOfColor.Add(colors[x + y * texture.width], _countColor);
                         _allPixelGroups.Add(_countColor, new List<Pixel>());
+                        _allPixelGroups[_countColor].Add(Pixels[x, y]);
                         Pixels[x, y].id = _countColor;
-                        Pixels[x, y]._color = colors[x + y * texture.width];
+                        Pixels[x, y]._colorTrue = colors[x + y * texture.width];
                         _countColor++;
                     }
                     else//màu cũ
@@ -79,7 +86,7 @@ public class GameManager : MonoBehaviour
                         int foundId = _allTypeOfColor.GetValueOrDefault(colors[x + y * texture.width]);
                         _allPixelGroups[foundId].Add(Pixels[x, y]);
                         Pixels[x, y].id = foundId;
-                        Pixels[x, y]._color = colors[x + y * texture.width];
+                        Pixels[x, y]._colorTrue = colors[x + y * texture.width];
                     }
 
                 }
@@ -94,75 +101,43 @@ public class GameManager : MonoBehaviour
         {
             ColorRenPixel colorRenPixel = Instantiate(colorPrefabs, _colorButonParen);
 
-            float offset = 1.2f;
-            //go.transform.position = new Vector2(kvp.Value * 2 * offset, -3);
-            //ColorSwatch colorswatch = go.GetComponent<ColorSwatch>();
+            //   float offset = 1.2f;
             colorRenPixel.SetData(kvp.Value, kvp.Key);
             colorRenPixel.getButon().onClick.AddListener(() => SetColor(colorRenPixel));
+
             ColorSwatches.Add(colorRenPixel);
         }
 
-        colorPixel = ColorSwatches[0].Color ;
+        // colorNow = ColorSwatches[0].Color;
     }
 
     private void SetColor(ColorRenPixel colorRenPixel)
     {
-        this.colorPixel = colorRenPixel.Color;
-    }
-
-    void DeselectAllColorSwatches()
-    {
-        for (int n = 0; n < ColorSwatches.Count; n++)
+        if (isChosseFirstColor)
         {
-            ColorSwatches[n].SetSelected(false);
+            SetHighlight(false);
         }
+        this.colorNow = colorRenPixel.Color;
+        this.idNow = colorRenPixel.Id;
+
+        if (!isChosseFirstColor) isChosseFirstColor = true;
+        SetHighlight(true);
     }
 
-    //void Update()
-    //{
-    //    Vector2 mousePos = Camera.ScreenToWorldPoint(Input.mousePosition);
-    //    int x = Mathf.RoundToInt(mousePos.x);
-    //    int y = Mathf.RoundToInt(mousePos.y);
-
-    //    Pixel hoveredPixel = null;
-
-
-    //    if (Input.GetMouseButton(0))
-    //    {
-    //        hoveredPixel = GetPixel(mousePos);
-    //        if (hoveredPixel != null && !hoveredPixel.isFilledIn)
-    //        {
-    //            //chọn đúng
-    //            if (1 > 0/*SelectedColorSwatch != null && SelectedColorSwatch.ID == hoveredPixel.id*/)
-    //            {
-    //                hoveredPixel.Fill();
-    //                //if (CheckIfSelectedComplete())//hoàn thành
-    //                //{
-    //                //    SelectedColorSwatch.SetCompleted();
-    //                //}
-    //            }
-    //            else
-    //            {
-    //                //    hoveredPixel.FillWrong();
-    //            }
-    //        }
-    //    }
-    //}
-    private Pixel GetPixel(Vector2 position)
+    private void SetHighlight(bool turn)
     {
-        if (position.x >= 0 && position.x < Pixels.GetLength(0) && position.y >= 0 && position.y < Pixels.GetLength(1))
+        this._list = _allPixelGroups[idNow];
+        for (int i = 0; i < _list.Count; i++)
         {
-            if (Pixels[Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y)] != null)
+            if (!_list[i].isFilledInTrue)
             {
-
-                var Pixel = Pixels[Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.y)];
-                Debug.Log(Pixel.name);
-                return Pixel;
+                _list[i]._highlight.enabled = turn;
             }
-            else return null;
-        }
-        else return null;
 
+
+        }
     }
+
+
 
 }
