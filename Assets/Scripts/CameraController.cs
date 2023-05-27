@@ -29,8 +29,8 @@ public class CameraController : MonoBehaviour
             Vector3 direction = StartTouch - cam.ScreenToWorldPoint(Input.mousePosition);
 
             Vector3 frameLimit = transform.position + direction;
-            frameLimit.x = Mathf.Clamp(frameLimit.x, limitCam.x -30f, limitCam.x + 30f);
-            frameLimit.y = Mathf.Clamp(frameLimit.y, limitCam.y -30f, limitCam.y + 30f);
+            frameLimit.x = Mathf.Clamp(frameLimit.x, limitCam.x -20f, limitCam.x + 20f);
+            frameLimit.y = Mathf.Clamp(frameLimit.y, limitCam.y -20f, limitCam.y + 20f);
 
             cam.transform.position += direction;
             transform.position = frameLimit;
