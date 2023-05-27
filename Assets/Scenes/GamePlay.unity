@@ -827,16 +827,17 @@ MonoBehaviour:
   isFirstClick: 0
   isChosseFirstColor: 0
   camMaxsize: 0
+  _trs: {fileID: 2133733697}
+  _colorButonParen: {fileID: 2051622270}
   texture: {fileID: 2800000, guid: 2df8431953950ff49a9c0c10708c34b6, type: 3}
   objPrefab: {fileID: -936503352801553101, guid: 67452298304ea1e4a8617402a3d881d8, type: 3}
   colorPrefabs: {fileID: 6724911196594950717, guid: c4f0f5174f1196b4d8a26e943a4a0ffb, type: 3}
   slider: {fileID: 488207853}
+  _list: []
+  _countColor: 1
   zoomMultiplier: 2
   defaultFov: 90
   zoomDuration: 2
-  _list: []
-  _trs: {fileID: 2133733697}
-  _colorButonParen: {fileID: 2051622270}
 --- !u!1 &1766758190
 GameObject:
   m_ObjectHideFlags: 0

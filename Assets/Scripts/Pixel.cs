@@ -103,7 +103,6 @@ public class Pixel : MonoBehaviour
             GameManager.Instance.isClick = true;
             if (GameManager.Instance.isFirstClick) Fill();
         }
-
     }
     private void OnMouseUp()
     {
@@ -115,6 +114,4 @@ public class Pixel : MonoBehaviour
         if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && CheckColor()) Fill();
         else if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && !CheckColor()) FillWrong();
     }
-
-
 }
