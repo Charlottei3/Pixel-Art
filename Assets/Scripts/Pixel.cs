@@ -59,6 +59,7 @@ public class Pixel : MonoBehaviour
             }
             else
                 _colorRen.color = Color.Lerp(_colorWrongMin, _colorWrongMax, value);
+            _text.color = new Color(0, 0, 0, Mathf.Clamp01(value));
         }
     }
 
@@ -69,12 +70,36 @@ public class Pixel : MonoBehaviour
         _lineRen.color = _colorTrue;
         _text.text = "";
         _highlight.enabled = false;
-        CheckCompleteColorNow();
+        //hoàn thành xong màu chưa
+        if (CheckCompleteColorNow(GameManager.Instance.idNow))
+        {
+            GameManager.Instance.allButon[GameManager.Instance.idNow - 1]._imageCompelete.enabled = true;
+        }
+        if (CheckCompleteAllColor()) { Debug.Log("Wingame"); }
     }
-    private void CheckCompleteColorNow()
+    private bool CheckCompleteColorNow(int id)
     {
-
+        foreach (Pixel px in GameManager.Instance._allPixelGroups[id])
+        {
+            if (!px.isFilledInTrue)
+                return false;
+        }
+        return true;
     }
+    private bool CheckCompleteAllColor()
+    {
+        foreach (ColorRenPixel bt in GameManager.Instance.allButon)
+        {
+            if (bt._imageCompelete.enabled == false)
+            {
+                if (bt == null) continue;
+                return false;
+
+            }
+        }
+        return true;
+    }
+
     private bool CheckColor()
     {
         if (isFilledInTrue) return false;
