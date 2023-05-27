@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 public class ColorRenPixel : MonoBehaviour
 {
+    public Image _imageCompelete;
     public TMP_Text Id_text;
     public Image Background;
     public int Id;
-    bool Completed;
+    public bool Completed;
     bool Selected;
     public Color Color { get; set; }
     public Button getButon()

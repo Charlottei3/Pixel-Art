@@ -31,7 +31,9 @@ public class GameManager : MonoBehaviour
     private Dictionary<Color, int> _allTypeOfColor = new Dictionary<Color, int>();
     public Dictionary<int, List<Pixel>> _allPixelGroups = new Dictionary<int, List<Pixel>>();
     List<ColorRenPixel> ColorSwatches = new List<ColorRenPixel>();
+    [SerializeField] public ColorRenPixel[] allButon;
 
+    public int[,] checkWin;
 
 
     void Awake()
@@ -50,6 +52,11 @@ public class GameManager : MonoBehaviour
         CreatePixelMap();
 
         CreateColorSwatches();
+
+    }
+    private void Start()
+    {
+        checkWin = new int[_countColor - 1, 2];
     }
 
     public void CreatePixelMap()
@@ -60,6 +67,7 @@ public class GameManager : MonoBehaviour
         Camera.GetComponent<Camera>().orthographicSize = camMaxsize;
 
         Pixels = new Pixel[texture.width, texture.height];
+
 
         for (int x = 0; x < texture.width; x++)
         {
@@ -97,9 +105,13 @@ public class GameManager : MonoBehaviour
 
     void CreateColorSwatches()
     {
+        allButon = new ColorRenPixel[_allTypeOfColor.Count];
         foreach (KeyValuePair<Color, int> kvp in _allTypeOfColor)
         {
             ColorRenPixel colorRenPixel = Instantiate(colorPrefabs, _colorButonParen);
+            colorRenPixel.name = "Button" + kvp.Value;
+            allButon[kvp.Value - 1] = colorRenPixel;
+
 
             //   float offset = 1.2f;
             colorRenPixel.SetData(kvp.Value, kvp.Key);
@@ -133,8 +145,6 @@ public class GameManager : MonoBehaviour
             {
                 _list[i]._highlight.enabled = turn;
             }
-
-
         }
     }
 
