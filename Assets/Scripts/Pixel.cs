@@ -80,7 +80,7 @@ public class Pixel : MonoBehaviour
         {
             GameManager.Instance.allButon[GameManager.Instance.idNow - 1]._imageCompelete.enabled = true;
         }
-        if (CheckCompleteAllColor()) { Debug.Log("Wingame"); }
+        if (CheckCompleteAllColor()) { GameManager.Instance.LoadPicture(); }
     }
     private float UpdateSlide(int id)
     {

@@ -12,6 +12,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public static bool Nextlevel = false;
+    public Texture2D texture, nextTexture;
     public Color colorNow { get; set; }
     public int idNow { get; set; }
     public bool isClick = false;
@@ -21,7 +23,7 @@ public class GameManager : MonoBehaviour
     public float camMaxsize;
     public PageSwipe pageSwipe;
     public Transform _trs, _colorButonParen, pageParent;
-    public Texture2D texture;
+
     [SerializeField] Pixel objPrefab;
     [SerializeField] GameObject pagePrefabs;
     [SerializeField] ColorRenPixel colorPrefabs;
@@ -43,30 +45,32 @@ public class GameManager : MonoBehaviour
 
     public int[,] checkWin;
 
-
     void Awake()
     {
-        if (Instance != null)
+        if (Nextlevel)
         {
-            DestroyImmediate(gameObject);
+            Instance = this;
+            Instance.texture = Instance.nextTexture;
+            //DestroyImmediate(gameObject);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+
         }
         Camera = Camera.main;
-        CreatePixelMap();
 
-        CreateColorSwatches();
 
     }
     private void Start()
     {
+        CreatePixelMap();
 
+        CreateColorSwatches();
         Application.targetFrameRate = 60;
         canMoveCam = true;
         checkWin = new int[_countColor - 1, 2];
+
     }
 
     public void CreatePixelMap()
@@ -176,6 +180,13 @@ public class GameManager : MonoBehaviour
                 _list[i]._highlight.enabled = turn;
             }
         }
+    }
+
+    public void LoadPicture()
+    {
+        Nextlevel = true;
+        SceneManager.LoadScene("GamePlay");
+
     }
 
 }

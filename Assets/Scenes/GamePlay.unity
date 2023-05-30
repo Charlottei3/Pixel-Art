@@ -731,8 +731,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ca3e4e628787142868e78c3d3d9ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  percentThreshold: 0.2
-  easing: 0.5
+  percentThreshold: 0.35
+  speed01: 0.15
   totalPages: 2
 --- !u!1 &1000311247
 GameObject:
@@ -852,6 +852,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c5f7e39325a084c9a7e95f09eb5404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  texture: {fileID: 2800000, guid: 0dab9a370e88d6d4091035ac49c7d60c, type: 3}
+  nextTexture: {fileID: 2800000, guid: bdd66bfc6000cdb4f809def026acc321, type: 3}
   isClick: 0
   canMoveCam: 0
   isFirstClick: 0
@@ -861,7 +863,6 @@ MonoBehaviour:
   _trs: {fileID: 2133733697}
   _colorButonParen: {fileID: 2051622270}
   pageParent: {fileID: 841652921}
-  texture: {fileID: 2800000, guid: 696e116c159fbe643b8af8e5b4adeffb, type: 3}
   objPrefab: {fileID: -936503352801553101, guid: 67452298304ea1e4a8617402a3d881d8, type: 3}
   pagePrefabs: {fileID: 6755657513246254501, guid: 390ce6d1b5a190d4d97b27099a013e22, type: 3}
   colorPrefabs: {fileID: 6724911196594950717, guid: c4f0f5174f1196b4d8a26e943a4a0ffb, type: 3}
