@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ColorRenPixel : MonoBehaviour
+public class ColorRenPixel : Button
 {
     public Image _imageCompelete;
     public TMP_Text Id_text;
+    public Slider slider;
     public Image Background;
     public int Id;
     public bool Completed;
@@ -40,5 +42,4 @@ public class ColorRenPixel : MonoBehaviour
             }
         }
     }
-
 }

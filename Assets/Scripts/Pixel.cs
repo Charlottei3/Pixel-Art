@@ -15,6 +15,7 @@ public class Pixel : MonoBehaviour
     public Color _colorWrongMax { get; set; }
     public Color _colorWrongMin { get; set; }
 
+
     [SerializeField] SpriteRenderer _colorRen;
     [SerializeField] SpriteRenderer _lineRen;
     [SerializeField] public SpriteRenderer _highlight;
@@ -40,8 +41,8 @@ public class Pixel : MonoBehaviour
     private void Start()
     {
         _text.text = id.ToString();
-        _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale, Color.white, 0.1f);
-        // _colorRen.color = Color.Lerp(new Color(_colorTrue.grayscale, _colorTrue.grayscale, _colorTrue.grayscale), Color.white, 0);
+        _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, 0.3f);
+        _text.color = new Color(0, 0, 0, Mathf.Clamp01(0));
         GameManager.Instance.slider.onValueChanged.AddListener(OnSliderValueChanged);
 
 
@@ -55,10 +56,11 @@ public class Pixel : MonoBehaviour
         {
             if (!isFlilled)//chưa tô
             {
-                _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale, Color.white, Mathf.Max(0.1f, value));
+                _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, Mathf.Max(0.3f, value));
             }
             else
                 _colorRen.color = Color.Lerp(_colorWrongMin, _colorWrongMax, value);
+
             _text.color = new Color(0, 0, 0, Mathf.Clamp01(value));
         }
     }
@@ -70,12 +72,29 @@ public class Pixel : MonoBehaviour
         _lineRen.color = _colorTrue;
         _text.text = "";
         _highlight.enabled = false;
+        //Update thanh slide
+        GameManager.Instance.allButon[GameManager.Instance.idNow - 1].slider.value = UpdateSlide(GameManager.Instance.idNow);
         //hoàn thành xong màu chưa
         if (CheckCompleteColorNow(GameManager.Instance.idNow))
         {
             GameManager.Instance.allButon[GameManager.Instance.idNow - 1]._imageCompelete.enabled = true;
         }
         if (CheckCompleteAllColor()) { Debug.Log("Wingame"); }
+    }
+    private float UpdateSlide(int id)
+    {
+
+        float a = 0;
+
+        foreach (Pixel px in GameManager.Instance._allPixelGroups[id])
+        {
+            if (px.isFilledInTrue)
+            {
+                a++;
+            }
+
+        }
+        return (a / GameManager.Instance._allPixelGroups[id].Count);
     }
     private bool CheckCompleteColorNow(int id)
     {

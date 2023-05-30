@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -13,18 +15,24 @@ public class GameManager : MonoBehaviour
     public Color colorNow { get; set; }
     public int idNow { get; set; }
     public bool isClick = false;
+    public bool canMoveCam = true;
     public bool isFirstClick = false;
     public bool isChosseFirstColor = false;
     public float camMaxsize;
-    public Transform _trs, _colorButonParen;
+    public PageSwipe pageSwipe;
+    public Transform _trs, _colorButonParen, pageParent;
     public Texture2D texture;
     [SerializeField] Pixel objPrefab;
+    [SerializeField] GameObject pagePrefabs;
     [SerializeField] ColorRenPixel colorPrefabs;
     [SerializeField] private Pixel[,] Pixels;
     [SerializeField] public Slider slider;
     [SerializeField] List<Pixel> _list;
     [SerializeField] private int _countColor = 1;
     Camera Camera;
+    [SerializeField] private CinemachineVirtualCamera virturalcam;
+    [SerializeField] private Transform camlookat;
+    public Vector3 centerCam;
     public float zoomMultiplier = 2;
     public float defaultFov = 90;
     public float zoomDuration = 2;
@@ -38,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+
         if (Instance != null)
         {
             DestroyImmediate(gameObject);
@@ -56,15 +65,17 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        canMoveCam = true;
         checkWin = new int[_countColor - 1, 2];
     }
 
     public void CreatePixelMap()
     {
         Color[] colors = texture.GetPixels();
-        Camera.transform.position = new Vector3((float)texture.width / 2, (float)texture.height / 2, -10);
+        centerCam = new Vector3((float)texture.width / 2, (float)texture.height / 2, -10) + Vector3.down * 3;
+        camlookat.transform.position = centerCam;
         camMaxsize = Mathf.Max(texture.width, texture.height) + 3;
-        Camera.GetComponent<Camera>().orthographicSize = camMaxsize;
+        virturalcam.m_Lens.OrthographicSize = camMaxsize;
 
         Pixels = new Pixel[texture.width, texture.height];
 
@@ -73,7 +84,7 @@ public class GameManager : MonoBehaviour
         {
             for (int y = 0; y < texture.height; y++)
             {
-                if (colors[x + y * texture.width].a != 0)
+                if (colors[x + y * texture.width].a >= 0.8f)
                 {
                     Pixel pixel = Instantiate(objPrefab, _trs);
                     pixel.transform.position = new Vector3(x, y);
@@ -96,9 +107,12 @@ public class GameManager : MonoBehaviour
                         Pixels[x, y].id = foundId;
                         Pixels[x, y]._colorTrue = colors[x + y * texture.width];
                     }
+
                 }
             }
         }
+        pageSwipe.totalPages = (_countColor - 1) / 10 + 1;
+
     }
 
     void CreateColorSwatches()
@@ -110,12 +124,25 @@ public class GameManager : MonoBehaviour
             colorRenPixel.name = "Button" + kvp.Value;
             allButon[kvp.Value - 1] = colorRenPixel;
 
-
             //   float offset = 1.2f;
             colorRenPixel.SetData(kvp.Value, kvp.Key);
             colorRenPixel.getButon().onClick.AddListener(() => SetColor(colorRenPixel));
-
             ColorSwatches.Add(colorRenPixel);
+        }
+
+        for (int i = 1; i <= pageSwipe.totalPages; i++)
+        {
+            GameObject x = Instantiate(pagePrefabs, pageParent);
+            x.name = "page" + i;
+            x.GetComponent<GridLayoutGroup>().cellSize = new Vector2(Screen.width / 5, Screen.width / 5);
+            x.transform.position = _colorButonParen.transform.position + new Vector3(Screen.width, 0, 0) * (i - 1);
+            for (int k = (i - 1) * 10; k < i * 10; k++)
+            {
+                if (k >= allButon.Length) break;
+                allButon[k].transform.parent = x.transform;
+
+            }
+
         }
         // colorNow = ColorSwatches[0].Color;
     }
