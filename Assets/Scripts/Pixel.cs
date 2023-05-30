@@ -23,26 +23,26 @@ public class Pixel : MonoBehaviour
     private bool isFlilled = false;
 
 
-    public bool isFilledInTrue
-    {
-        get
-        {
-            if (_colorRen.color == _colorTrue)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+    public bool isFilledInTrue = false;
+    //{
+    //    get
+    //    {
+    //        if (_colorRen.color == _colorTrue)
+    //        {
+    //            return true;
+    //        }
+    //        else
+    //        {
+    //            return false;
+    //        }
+    //    }
+    //}
 
     private void Start()
     {
         _text.text = id.ToString();
         _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, 0.3f);
-        _text.color = new Color(0, 0, 0, Mathf.Clamp01(0));
+        _text.color = Color.black;
         GameManager.Instance.slider.onValueChanged.AddListener(OnSliderValueChanged);
 
 
@@ -67,6 +67,7 @@ public class Pixel : MonoBehaviour
 
     public void Fill()
     {
+        isFilledInTrue = true;
         isFlilled = true;
         _colorRen.color = _colorTrue;
         _lineRen.color = _colorTrue;

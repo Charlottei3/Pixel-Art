@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-
         if (Instance != null)
         {
             DestroyImmediate(gameObject);
@@ -57,7 +56,6 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         Camera = Camera.main;
-        Application.targetFrameRate = 60;
         CreatePixelMap();
 
         CreateColorSwatches();
@@ -65,6 +63,8 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+
+        Application.targetFrameRate = 60;
         canMoveCam = true;
         checkWin = new int[_countColor - 1, 2];
     }
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         {
             for (int y = 0; y < texture.height; y++)
             {
-                if (colors[x + y * texture.width].a >= 0.8f)
+                if (colors[x + y * texture.width].a >= 0.5f)
                 {
                     Pixel pixel = Instantiate(objPrefab, _trs);
                     pixel.transform.position = new Vector3(x, y);
@@ -112,7 +112,10 @@ public class GameManager : MonoBehaviour
             }
         }
         pageSwipe.totalPages = (_countColor - 1) / 10 + 1;
-
+        if ((_countColor - 1) % 10 == 0)
+        {
+            pageSwipe.totalPages = (_countColor - 1) / 10;
+        }
     }
 
     void CreateColorSwatches()
