@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButton(0) && !GameManager.Instance.isFirstClick && GameManager.Instance.canMoveCam)
         {
             Vector3 direction = StartTouch - cam.ScreenToWorldPoint(Input.mousePosition);
-            camlookat.transform.position = ClampCamera(cam.transform.position + direction);
+            camlookat.transform.position = ClampCamera(cam.transform.position + direction * 1.3f);
         }
         if (Input.touchCount == 2)
         {
@@ -47,12 +47,12 @@ public class CameraController : MonoBehaviour
             float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
 
             float different = currentMagnitude - prevMagnitude;
-            Zoom(different * 0.01f);
+            Zoom(different * 0.005f);
         }
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {
-            Zoom(Input.GetAxis("Mouse ScrollWheel"));
-        }
+        //if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        //{
+        //    Zoom(Input.GetAxis("Mouse ScrollWheel"));
+        //}
     }
 
     private void OnSliderValueChanged(float value)
