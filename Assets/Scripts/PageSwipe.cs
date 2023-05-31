@@ -8,8 +8,8 @@ using static Cinemachine.CinemachineOrbitalTransposer;
 public class PageSwipe : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     private Vector3 panelLocation;
-    public float percentThreshold = 0.2f;
-    public float easing = 0.5f;
+    public float percentThreshold = 1;
+    public float speed01 = 0.8f;
     public int totalPages = 2;
     private int currentPage = 1;
     private void Start()
@@ -21,7 +21,7 @@ public class PageSwipe : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         float difference = data.pressPosition.x - data.position.x;
         transform.position = panelLocation - new Vector3(difference, 0, 0);
-        //GameManager.Instance.canMoveCam = false;
+        GameManager.Instance.canMoveCam = false;
     }
     public void OnEndDrag(PointerEventData data)
     {
@@ -40,12 +40,12 @@ public class PageSwipe : MonoBehaviour, IDragHandler, IEndDragHandler
                 currentPage--;
                 newLocation += new Vector3(Screen.width, 0, 0);
             }
-            StartCoroutine(SmoothMove(transform.position, newLocation, easing));
+            StartCoroutine(SmoothMove(transform.position, newLocation, speed01));
             panelLocation = newLocation;
         }
         else
         {
-            StartCoroutine(SmoothMove(transform.position, panelLocation, easing));
+            StartCoroutine(SmoothMove(transform.position, panelLocation, speed01));
         }
         IEnumerator SmoothMove(Vector3 startpos, Vector3 endpos, float seconds)
         {

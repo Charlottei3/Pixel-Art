@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +12,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public static bool Nextlevel = false;
+    public Texture2D texture, nextTexture;
     public Color colorNow { get; set; }
     public int idNow { get; set; }
     public bool isClick = false;
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour
     public float camMaxsize;
     public PageSwipe pageSwipe;
     public Transform _trs, _colorButonParen, pageParent;
-    public Texture2D texture;
+
     [SerializeField] Pixel objPrefab;
     [SerializeField] GameObject pagePrefabs;
     [SerializeField] ColorRenPixel colorPrefabs;
@@ -46,39 +47,42 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null)
+        if (Nextlevel)
         {
-            DestroyImmediate(gameObject);
+            Instance = this;
+            Instance.texture = Instance.nextTexture;
+            //DestroyImmediate(gameObject);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+
         }
         Camera = Camera.main;
-        CreatePixelMap();
 
-        CreateColorSwatches();
+
     }
     private void Start()
     {
+        CreatePixelMap();
+
+        CreateColorSwatches();
         Application.targetFrameRate = 60;
         canMoveCam = true;
         checkWin = new int[_countColor - 1, 2];
+
     }
 
     public void CreatePixelMap()
     {
-
         Color[] colors = texture.GetPixels();
         centerCam = new Vector3((float)texture.width / 2, (float)texture.height / 2, -10) + Vector3.down * 3;
         camlookat.transform.position = centerCam;
         camMaxsize = Mathf.Max(texture.width, texture.height) + 3;
         virturalcam.m_Lens.OrthographicSize = camMaxsize;
+
         Pixels = new Pixel[texture.width, texture.height];
 
-        
-        int[,] checkColorPixel = new int[texture.width, texture.height];
 
         for (int x = 0; x < texture.width; x++)
         {
@@ -107,8 +111,8 @@ public class GameManager : MonoBehaviour
                         Pixels[x, y].id = foundId;
                         Pixels[x, y]._colorTrue = colors[x + y * texture.width];
                     }
-                }
 
+                }
             }
         }
         pageSwipe.totalPages = (_countColor - 1) / 10 + 1;
@@ -118,10 +122,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     void CreateColorSwatches()
     {
         _colorButonParen.transform.position = Vector3.zero + new Vector3(0, Screen.width / 2.5f, 0);
+        Debug.Log(Screen.height);
+
         allButon = new ColorRenPixel[_allTypeOfColor.Count];
         foreach (KeyValuePair<Color, int> kvp in _allTypeOfColor)
         {
@@ -147,6 +152,7 @@ public class GameManager : MonoBehaviour
                 allButon[k].transform.parent = x.transform;
 
             }
+
         }
         // colorNow = ColorSwatches[0].Color;
     }
@@ -159,6 +165,7 @@ public class GameManager : MonoBehaviour
         }
         this.colorNow = colorRenPixel.Color;
         this.idNow = colorRenPixel.Id;
+
         if (!isChosseFirstColor) isChosseFirstColor = true;
         SetHighlight(true);
     }
@@ -173,6 +180,13 @@ public class GameManager : MonoBehaviour
                 _list[i]._highlight.enabled = turn;
             }
         }
+    }
+
+    public void LoadPicture()
+    {
+        Nextlevel = true;
+        SceneManager.LoadScene("GamePlay");
+
     }
 
 }
