@@ -21,7 +21,7 @@ public class PageSwipe : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         float difference = data.pressPosition.x - data.position.x;
         transform.position = panelLocation - new Vector3(difference, 0, 0);
-        GameManager.Instance.canMoveCam = false;
+        //GameManager.Instance.canMoveCam = false;
     }
     public void OnEndDrag(PointerEventData data)
     {
@@ -45,7 +45,6 @@ public class PageSwipe : MonoBehaviour, IDragHandler, IEndDragHandler
         }
         else
         {
-            Debug.Log("back");
             StartCoroutine(SmoothMove(transform.position, panelLocation, easing));
         }
         IEnumerator SmoothMove(Vector3 startpos, Vector3 endpos, float seconds)

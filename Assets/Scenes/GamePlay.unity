@@ -272,7 +272,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &488207851
 GameObject:
@@ -838,7 +838,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1392436045
 MonoBehaviour:
@@ -861,8 +861,8 @@ MonoBehaviour:
   _trs: {fileID: 2133733697}
   _colorButonParen: {fileID: 2051622270}
   pageParent: {fileID: 841652921}
-  texture: {fileID: 2800000, guid: 696e116c159fbe643b8af8e5b4adeffb, type: 3}
-  objPrefab: {fileID: -936503352801553101, guid: 67452298304ea1e4a8617402a3d881d8, type: 3}
+  texture: {fileID: 2800000, guid: 4f3d8344331afc549a4c44802a3a8d47, type: 3}
+  _pxObj: {fileID: -936503352801553101, guid: 67452298304ea1e4a8617402a3d881d8, type: 3}
   pagePrefabs: {fileID: 6755657513246254501, guid: 390ce6d1b5a190d4d97b27099a013e22, type: 3}
   colorPrefabs: {fileID: 6724911196594950717, guid: c4f0f5174f1196b4d8a26e943a4a0ffb, type: 3}
   slider: {fileID: 488207853}
@@ -944,7 +944,7 @@ Transform:
   m_Children:
   - {fileID: 1662846981}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1662846980
 GameObject:
@@ -1212,7 +1212,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6755657514491355352
 PrefabInstance:

@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -43,7 +44,6 @@ public class GameManager : MonoBehaviour
 
     public int[,] checkWin;
 
-
     void Awake()
     {
         if (Instance != null)
@@ -59,11 +59,9 @@ public class GameManager : MonoBehaviour
         CreatePixelMap();
 
         CreateColorSwatches();
-
     }
     private void Start()
     {
-
         Application.targetFrameRate = 60;
         canMoveCam = true;
         checkWin = new int[_countColor - 1, 2];
@@ -71,14 +69,16 @@ public class GameManager : MonoBehaviour
 
     public void CreatePixelMap()
     {
+
         Color[] colors = texture.GetPixels();
         centerCam = new Vector3((float)texture.width / 2, (float)texture.height / 2, -10) + Vector3.down * 3;
         camlookat.transform.position = centerCam;
         camMaxsize = Mathf.Max(texture.width, texture.height) + 3;
         virturalcam.m_Lens.OrthographicSize = camMaxsize;
-
         Pixels = new Pixel[texture.width, texture.height];
 
+        
+        int[,] checkColorPixel = new int[texture.width, texture.height];
 
         for (int x = 0; x < texture.width; x++)
         {
@@ -107,8 +107,8 @@ public class GameManager : MonoBehaviour
                         Pixels[x, y].id = foundId;
                         Pixels[x, y]._colorTrue = colors[x + y * texture.width];
                     }
-
                 }
+
             }
         }
         pageSwipe.totalPages = (_countColor - 1) / 10 + 1;
@@ -118,11 +118,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     void CreateColorSwatches()
     {
         _colorButonParen.transform.position = Vector3.zero + new Vector3(0, Screen.width / 2.5f, 0);
-        Debug.Log(Screen.height);
-
         allButon = new ColorRenPixel[_allTypeOfColor.Count];
         foreach (KeyValuePair<Color, int> kvp in _allTypeOfColor)
         {
@@ -148,7 +147,6 @@ public class GameManager : MonoBehaviour
                 allButon[k].transform.parent = x.transform;
 
             }
-
         }
         // colorNow = ColorSwatches[0].Color;
     }
@@ -161,7 +159,6 @@ public class GameManager : MonoBehaviour
         }
         this.colorNow = colorRenPixel.Color;
         this.idNow = colorRenPixel.Id;
-
         if (!isChosseFirstColor) isChosseFirstColor = true;
         SetHighlight(true);
     }

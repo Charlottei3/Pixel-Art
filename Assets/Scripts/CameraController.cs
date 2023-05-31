@@ -69,10 +69,10 @@ public class CameraController : MonoBehaviour
     {
         float _camheight = cam.orthographicSize;
         float _camwidth = cam.orthographicSize * cam.aspect;
-        float mixX = (GameManager.Instance.centerCam.x - GameManager.Instance.camMaxsize * cam.aspect / 2) + _camwidth / 2;
-        float maxX = (GameManager.Instance.centerCam.x + GameManager.Instance.camMaxsize * cam.aspect / 2) - _camwidth / 2;
-        float mixY = (GameManager.Instance.centerCam.y - GameManager.Instance.camMaxsize / 2) + _camheight / 2;
-        float maxY = (GameManager.Instance.centerCam.y + GameManager.Instance.camMaxsize / 2) - _camheight / 2;
+        float mixX = (GameManager.Instance.centerCam.x - GameManager.Instance.camMaxsize * cam.aspect) + _camwidth ;
+        float maxX = (GameManager.Instance.centerCam.x + GameManager.Instance.camMaxsize * cam.aspect) - _camwidth ;
+        float mixY = (GameManager.Instance.centerCam.y - GameManager.Instance.camMaxsize ) + _camheight ;
+        float maxY = (GameManager.Instance.centerCam.y + GameManager.Instance.camMaxsize) - _camheight;
 
         float newX = Mathf.Clamp(targerPosition.x, mixX, maxX);
 
