@@ -15,6 +15,10 @@ public class ColorRenPixel : Button
     public bool Completed;
     bool Selected;
     public Color Color { get; set; }
+    private void Start()
+    {
+        slider.transform.localPosition = new Vector3(0, -Screen.width / 10 * 2 / 3, 0);
+    }
     public Button getButon()
     {
         return this.GetComponent<Button>();
