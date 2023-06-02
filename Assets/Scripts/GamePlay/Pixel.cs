@@ -20,8 +20,7 @@ public class Pixel : MonoBehaviour
     [SerializeField] SpriteRenderer _lineRen;
     [SerializeField] public SpriteRenderer _highlight;
     [SerializeField] TextMeshPro _text;
-    private bool isFlilled = false;
-
+    public bool isFlilled = false;
 
     public bool isFilledInTrue = false;
     //{
@@ -44,8 +43,7 @@ public class Pixel : MonoBehaviour
         _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, 0.3f);
         _text.color = Color.black;
         GameManager.Instance.slider.onValueChanged.AddListener(OnSliderValueChanged);
-
-
+       
     }
     private void Update()
     {
@@ -71,6 +69,7 @@ public class Pixel : MonoBehaviour
         isFlilled = true;
         _colorRen.color = _colorTrue;
         _lineRen.color = _colorTrue;
+
         _text.text = "";
         _highlight.enabled = false;
         //Update thanh slide
@@ -84,7 +83,6 @@ public class Pixel : MonoBehaviour
     }
     private float UpdateSlide(int id)
     {
-
         float a = 0;
 
         foreach (Pixel px in GameManager.Instance._allPixelGroups[id])
@@ -148,7 +146,6 @@ public class Pixel : MonoBehaviour
             GameManager.Instance.isClick = true;
             if (GameManager.Instance.isFirstClick) Fill();
         }
-
     }
     private void OnMouseUp()
     {
@@ -160,6 +157,4 @@ public class Pixel : MonoBehaviour
         if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && CheckColor()) Fill();
         else if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && !CheckColor()) FillWrong();
     }
-
-
 }
