@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] public ColorRenPixel[] allButon;
 
     public int[,] checkWin;
-
     void Awake()
     {
         if (Nextlevel)
@@ -56,11 +55,8 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
-
         }
         Camera = Camera.main;
-
-
     }
     private void Start()
     {
@@ -70,7 +66,6 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
         canMoveCam = true;
         checkWin = new int[_countColor - 1, 2];
-
     }
 
     public void CreatePixelMap()
@@ -82,8 +77,6 @@ public class GameManager : MonoBehaviour
         virturalcam.m_Lens.OrthographicSize = camMaxsize;
 
         Pixels = new Pixel[texture.width, texture.height];
-
-
         for (int x = 0; x < texture.width; x++)
         {
             for (int y = 0; y < texture.height; y++)
@@ -111,7 +104,6 @@ public class GameManager : MonoBehaviour
                         Pixels[x, y].id = foundId;
                         Pixels[x, y]._colorTrue = colors[x + y * texture.width];
                     }
-
                 }
             }
         }
@@ -125,21 +117,17 @@ public class GameManager : MonoBehaviour
     void CreateColorSwatches()
     {
         _colorButonParen.transform.position = Vector3.zero + new Vector3(0, Screen.width / 2.5f, 0);
-        Debug.Log(Screen.height);
-
         allButon = new ColorRenPixel[_allTypeOfColor.Count];
         foreach (KeyValuePair<Color, int> kvp in _allTypeOfColor)
         {
             ColorRenPixel colorRenPixel = Instantiate(colorPrefabs, _colorButonParen);
             colorRenPixel.name = "Button" + kvp.Value;
             allButon[kvp.Value - 1] = colorRenPixel;
-
             //   float offset = 1.2f;
             colorRenPixel.SetData(kvp.Value, kvp.Key);
             colorRenPixel.getButon().onClick.AddListener(() => SetColor(colorRenPixel));
             ColorSwatches.Add(colorRenPixel);
         }
-
         for (int i = 1; i <= pageSwipe.totalPages; i++)
         {
             GameObject x = Instantiate(pagePrefabs, pageParent);
@@ -150,9 +138,7 @@ public class GameManager : MonoBehaviour
             {
                 if (k >= allButon.Length) break;
                 allButon[k].transform.parent = x.transform;
-
             }
-
         }
         // colorNow = ColorSwatches[0].Color;
     }
@@ -186,7 +172,6 @@ public class GameManager : MonoBehaviour
     {
         Nextlevel = true;
         SceneManager.LoadScene("GamePlay");
-
     }
 
 }

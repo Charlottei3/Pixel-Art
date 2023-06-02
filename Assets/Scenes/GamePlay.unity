@@ -837,8 +837,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c5f7e39325a084c9a7e95f09eb5404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texture: {fileID: 2800000, guid: 0dab9a370e88d6d4091035ac49c7d60c, type: 3}
-  nextTexture: {fileID: 2800000, guid: bdd66bfc6000cdb4f809def026acc321, type: 3}
+  texture: {fileID: 2800000, guid: bdd66bfc6000cdb4f809def026acc321, type: 3}
+  nextTexture: {fileID: 2800000, guid: 4f3d8344331afc549a4c44802a3a8d47, type: 3}
   isClick: 0
   canMoveCam: 0
   isFirstClick: 0
