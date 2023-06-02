@@ -47,17 +47,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (Nextlevel)
-        {
-            Instance = this;
-            Instance.texture = Instance.nextTexture;
-            //DestroyImmediate(gameObject);
-        }
-        else
-        {
-            Instance = this;
-
-        }
+        Instance = this;
+        texture = PictureControll.Instance_picture.nowTexure;
         Camera = Camera.main;
 
 
