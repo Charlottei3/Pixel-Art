@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class BannerSlider : MonoBehaviour
 {
@@ -15,13 +16,30 @@ public class BannerSlider : MonoBehaviour
     public UnityEvent<BannerView> OnPageChange;
 
     [SerializeField] private BannerScroll _scroller;
- 
+    private Coroutine autoScroll;
+
     private void Start()
     {
         _scroller.OnChangeStarted.AddListener(PageScroller_PageChangeStarted);
         _scroller.OnChangeEnded.AddListener(PageScroll_PageChangeEnded);
+
+        //StartAutoScroll();
+        //StartCoroutine(nameof(ScrollAfterTime));
     }
 
+    private void Update()
+    {
+        StartCoroutine(nameof(ScrollAfterTime));
+    }
+    private void StartAutoScroll()
+    {
+        if (autoScroll != null)
+        {
+            StopCoroutine(autoScroll);
+        }
+
+        autoScroll = StartCoroutine(nameof(ScrollAfterTime));
+    }
     public void AddPage(BannerView bannerView)
     {
         if (_pages.Count == 0)
@@ -31,6 +49,16 @@ public class BannerSlider : MonoBehaviour
         }
 
         _pages.Add(bannerView);
+
+        for (int i = 0; i < _pages.Count; i++)
+        {
+            if (i > _pages.Count)
+            {
+                i = 0;
+                bannerView.ChangingToActiveState();
+                bannerView.ChangingActiveState(true);
+            }
+        }
 
         if (_dotsIndicator != null)
         {
@@ -57,6 +85,22 @@ public class BannerSlider : MonoBehaviour
         _dotsIndicator?.ChangeActiveDot(fromIndex, toIndex);
         OnPageChange?.Invoke(_pages[toIndex]);
     }
-
+    private int currentPageIndex = 0;
+    private IEnumerable ScrollAfterTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2f);
+            currentPageIndex++;
+            if (currentPageIndex > _scroller._scrollRect.content.childCount)
+            {
+                currentPageIndex = 0;
+            }
+            float normalizedPosition = currentPageIndex / (float)(_scroller._scrollRect.content.childCount - 1);
+            _scroller._scrollRect.horizontalNormalizedPosition = normalizedPosition;
+            Debug.Log(normalizedPosition);
+            Debug.Log(currentPageIndex);
+        }
+    }
 }
 

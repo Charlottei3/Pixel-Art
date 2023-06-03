@@ -21,6 +21,7 @@ public class BannerScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     private float _targetNormalizedPosition;
     private float _moveSpeed;
 
+
     private void Update()
     {
         if (_moveSpeed == 0) return;
@@ -49,6 +50,7 @@ public class BannerScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             OnChangeEnded?.Invoke(_currentPage, _targetPage);
             _currentPage = _targetPage;
         }
+
         _moveSpeed = 0;
     }
 
@@ -67,13 +69,23 @@ public class BannerScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         if (isForwardDrag && currentPosition > switchPageBreakpoint)
         {
             page++;
+            
         }
         else if (!isForwardDrag && currentPosition < switchPageBreakpoint)
         {
             page--;
+           
         }
+
+        /*else if (!isForwardDrag && currentPosition > switchPageBreakpoint)
+        {
+            page = 0;
+        }*/
+
         ScrollPage(page);
     }
+
+   
 
     private void ScrollPage(int page)
     {
