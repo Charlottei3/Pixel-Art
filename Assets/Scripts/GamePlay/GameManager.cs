@@ -116,7 +116,6 @@ public class GameManager : MonoBehaviour
     void CreateColorSwatches()
     {
         _colorButonParen.transform.position = Vector3.zero + new Vector3(0, Screen.width / 2.5f, 0);
-        Debug.Log(Screen.height);
 
         allButon = new ColorRenPixel[_allTypeOfColor.Count];
         foreach (KeyValuePair<Color, int> kvp in _allTypeOfColor)
