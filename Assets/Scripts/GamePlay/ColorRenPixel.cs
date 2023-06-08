@@ -29,6 +29,7 @@ public class ColorRenPixel : Button
         Id = id;
         Id_text.text = id.ToString();
         Background.color = color;
+        Background.color = new Color(Background.color.r, Background.color.g, Background.color.b, 1);
         this.Color = color;
     }
 
