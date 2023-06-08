@@ -49,11 +49,16 @@ public class Btn_loadGame1 : BaseButton
                     loadTexure2.SetPixel(x, y, color);
                     loadTexure2.Apply();
                 }
-                else
+                else if (_texture.GetPixel(x, y).a >= 0.5f)
                 {
                     Color color = new Color();
                     color = _texture.GetPixel(x, y);
                     loadTexure2.SetPixel(x, y, color);
+                    loadTexure2.Apply();
+                }
+                else if (_texture.GetPixel(x, y).a < 0.5f)
+                {
+                    loadTexure2.SetPixel(x, y, Color.white);
                     loadTexure2.Apply();
                 }
             }
