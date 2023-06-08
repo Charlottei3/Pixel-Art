@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject x = Instantiate(pagePrefabs, pageParent);
             x.name = "page" + i;
-            x.GetComponent<GridLayoutGroup>().cellSize = new Vector2(Screen.width / 5, Screen.width / 5);
+            x.GetComponent<GridLayoutGroup>().cellSize = new Vector2(1080 / 5, 1080 / 5);
             x.transform.position = _colorButonParen.transform.position + new Vector3(Screen.width, 0, 0) * (i - 1);
             for (int k = (i - 1) * 10; k < i * 10; k++)
             {
