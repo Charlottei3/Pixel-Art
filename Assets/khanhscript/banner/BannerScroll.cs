@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class BannerScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 {
@@ -20,6 +21,18 @@ public class BannerScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     private float _targetNormalizedPosition;
     private float _moveSpeed;
+
+
+    /*public float scrollSpeed = 10f;
+    public float snapThreshold = 0.1f;
+
+    private float[] snapPositions;
+    private bool isDragging = false;*/
+ 
+    private void Start()
+    {
+        
+    }
 
     private void Update()
     {
@@ -39,10 +52,12 @@ public class BannerScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             OnChangeEnded?.Invoke(_currentPage, _targetPage);
             _currentPage = _targetPage;
         }
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        //isDragging = true;
         _startNormalizedPosition = _scrollRect.horizontalNormalizedPosition;
         if (_currentPage != _targetPage)
         {
@@ -54,15 +69,14 @@ public class BannerScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        //isDragging = false;
+       
         var pageWidth = 1f / GetPageCount();
         var pagePosition = _currentPage * pageWidth;
-
         var currentPosition = _scrollRect.horizontalNormalizedPosition;
         var minPageDrag = pageWidth * _minDeltaDrag;
-
         var isForwardDrag = _scrollRect.horizontalNormalizedPosition > _startNormalizedPosition;
         var switchPageBreakpoint = pagePosition + (isForwardDrag ? minPageDrag : -minPageDrag);
-
         var page = _currentPage;
         if (isForwardDrag && currentPosition > switchPageBreakpoint)
         {
@@ -72,6 +86,36 @@ public class BannerScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         {
             page--;
         }
+
+
+        /*int pageCount = _scrollRect.content.childCount;
+        float _pageWidth = 1f / pageCount;
+        snapPositions = new float[pageCount];
+
+        for (int i = 0; i < pageCount; i++)
+        {
+            snapPositions[i] = i * _pageWidth;
+        }
+        float closeSnapPosition = float.MaxValue;
+        for (int i = 0; i < snapPositions.Length; i++)
+        {
+            float distance = Mathf.Abs(snapPositions[i] - currentPosition);
+            if (distance < closeSnapPosition)
+            {
+                closeSnapPosition = distance;
+                _currentPage = i;
+            }
+
+            Debug.Log($"currentPosition: {currentPosition}");
+            Debug.Log($"distance: {distance}");
+            Debug.Log($"closeSnapPosition: {closeSnapPosition}");
+        }
+
+        if (closeSnapPosition >= snapThreshold)
+        {
+            _currentPage = 0;
+        }*/
+
         ScrollPage(page);
     }
 
@@ -91,5 +135,22 @@ public class BannerScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         var contentWidth = _scrollRect.content.rect.width;
         var rectWidth = ((RectTransform)_scrollRect.transform).rect.size.x;
         return Mathf.RoundToInt(contentWidth / rectWidth) - 1;
+    }
+
+    private IEnumerable ScrollAfterTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2f);
+            _currentPage++;
+            if (_currentPage > _scrollRect.content.childCount)
+            {
+                _currentPage = 0;
+            }
+            float normalizedPosition = _currentPage / (float)(_scrollRect.content.childCount - 1);
+            _scrollRect.horizontalNormalizedPosition = normalizedPosition;
+            Debug.Log(normalizedPosition);
+            Debug.Log(_currentPage);
+        }
     }
 }

@@ -26,6 +26,7 @@ public class BannerManager : MonoBehaviour
         }
     }
 }
+
 [Serializable]
 public class Banner
 {
