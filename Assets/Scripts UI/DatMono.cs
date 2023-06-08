@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DatMono : MonoBehaviour
 {
-    protected virtual void Start()
+    public virtual void Start()
     {
         this.LoadComponents();
     }

@@ -6,11 +6,10 @@ public abstract class BaseButton : DatMono
 {
     [Header("Base Button")]
     [SerializeField] protected Button button;
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
         button = GetComponent<Button>();
-        this.AddOnClickEvent();
     }
     protected override void LoadComponents()
     {

@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class Pixel : MonoBehaviour
 {
+    public int x;
+    public int y;
     private bool isClick = false;
     public int id { get; set; }
     public Color _colorTrue { get; set; }
@@ -23,46 +25,62 @@ public class Pixel : MonoBehaviour
     public bool isFlilled = false;
 
     public bool isFilledInTrue = false;
-    //{
-    //    get
-    //    {
-    //        if (_colorRen.color == _colorTrue)
-    //        {
-    //            return true;
-    //        }
-    //        else
-    //        {
-    //            return false;
-    //        }
-    //    }
-    //}
 
     private void Start()
     {
-        _text.text = id.ToString();
-        _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, 0.3f);
-        _text.color = Color.black;
+        if (!isFilledInTrue)
+        {
+            _text.text = id.ToString();
+            _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, 0f);
+            _text.color = Color.black;
+        }
         GameManager.Instance.slider.onValueChanged.AddListener(OnSliderValueChanged);
-       
+
     }
     private void Update()
     {
     }
     private void OnSliderValueChanged(float value)
     {
-        if (!isFilledInTrue)
+        if (!isFilledInTrue)//tô sai
         {
             if (!isFlilled)//chưa tô
             {
                 _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, Mathf.Max(0.3f, value));
             }
-            else
+            else //to roi nhung sai
                 _colorRen.color = Color.Lerp(_colorWrongMin, _colorWrongMax, value);
 
             _text.color = new Color(0, 0, 0, Mathf.Clamp01(value));
         }
     }
+    public void FillOnLoad()
+    {
+        GameManager.Instance.idNow = id;
+        isFilledInTrue = true;
+        isFlilled = true;
+        _colorRen.color = _colorTrue;
+        _lineRen.color = _colorTrue;
 
+        _text.text = "";
+        _highlight.enabled = false;
+
+        GameManager.Instance.allButon[GameManager.Instance.idNow - 1].slider.value = UpdateSlide(GameManager.Instance.idNow);
+        //hoàn thành xong màu chưa
+        if (CheckCompleteColorNow(GameManager.Instance.idNow))
+        {
+            GameManager.Instance.allButon[GameManager.Instance.idNow - 1]._imageCompelete.enabled = true;
+        }
+        if (CheckCompleteAllColor())
+        {
+            GameManager.Instance.Menu.SetActive(true);
+            GameManager.Instance.Clear();
+
+            GameManager.Instance.btnOutGame.gameObject.SetActive(false);
+            GameManager.Instance.update.UpdatePicture();
+            /*GameManager.Instance.LoadPicture();*/
+        }
+    }
     public void Fill()
     {
         isFilledInTrue = true;
@@ -72,6 +90,7 @@ public class Pixel : MonoBehaviour
 
         _text.text = "";
         _highlight.enabled = false;
+        Data.ClickTrue(GameManager.Instance.nowKey, x, y);
         //Update thanh slide
         GameManager.Instance.allButon[GameManager.Instance.idNow - 1].slider.value = UpdateSlide(GameManager.Instance.idNow);
         //hoàn thành xong màu chưa
@@ -79,7 +98,15 @@ public class Pixel : MonoBehaviour
         {
             GameManager.Instance.allButon[GameManager.Instance.idNow - 1]._imageCompelete.enabled = true;
         }
-        if (CheckCompleteAllColor()) { GameManager.Instance.LoadPicture(); }
+        if (CheckCompleteAllColor())
+        {
+            GameManager.Instance.Menu.SetActive(true);
+            GameManager.Instance.Clear();
+
+            GameManager.Instance.btnOutGame.gameObject.SetActive(false);
+            GameManager.Instance.update.UpdatePicture();
+            /*GameManager.Instance.LoadPicture();*/
+        }
     }
     private float UpdateSlide(int id)
     {

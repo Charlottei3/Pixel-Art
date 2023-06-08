@@ -8,6 +8,6 @@ public class GridSize : MonoBehaviour
     public GridLayoutGroup gridLayoutGroup;
     private void Start()
     {
-
+        gridLayoutGroup.cellSize = new Vector2((Screen.width - 60) / 2, (Screen.width - 60) / 2);
     }
 }

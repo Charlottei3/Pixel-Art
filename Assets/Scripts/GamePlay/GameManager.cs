@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     public float camMaxsize;
     public PageSwipe pageSwipe;
     public Transform _trs, _colorButonParen, pageParent;
-
     [SerializeField] Pixel objPrefab;
     [SerializeField] GameObject pagePrefabs;
     [SerializeField] ColorRenPixel colorPrefabs;
@@ -42,38 +41,98 @@ public class GameManager : MonoBehaviour
     public Dictionary<int, List<Pixel>> _allPixelGroups = new Dictionary<int, List<Pixel>>();
     List<ColorRenPixel> ColorSwatches = new List<ColorRenPixel>();
     [SerializeField] public ColorRenPixel[] allButon;
-
+    public GameObject Menu;
+    public btn_OutGame btnOutGame;
     public int[,] checkWin;
 
+    [Header("Save")]
+    public Texture2D textureBlackandWhite;
+    public string nowKey;
+    public bool[,] matrix;
+    public Dictionary<string, bool[,]> allSaves = new Dictionary<string, bool[,]>();
+    public Btn_loadGame1 update;
     void Awake()
     {
+
         Instance = this;
-        texture = PictureControll.Instance_picture.nowTexure;
+
         Camera = Camera.main;
 
 
     }
     private void Start()
     {
+
+
+    }
+
+    public void NewGame()
+    {
+
+        texture = PictureControll.Instance_picture.nowTexure;
         CreatePixelMap();
 
         CreateColorSwatches();
         Application.targetFrameRate = 60;
         canMoveCam = true;
         checkWin = new int[_countColor - 1, 2];
+        LoadFilled();
+
+    }
+
+    private void LoadFilled()
+    {
+
+        bool[,] matrix = Data.GetMatrix(nowKey);
+        Debug.Log($"{matrix.GetLength(0)}-{matrix.GetLength(1)}");
+        for (int x = 0; x < matrix.GetLength(0); x++)
+        {
+            for (int y = 0; y < matrix.GetLength(1); y++)
+            {
+                if (matrix[x, y])
+                {
+                    if (Pixels[x, y] != null)
+                        Pixels[x, y].FillOnLoad();
+
+
+                }
+            }
+        }
 
     }
 
     public void CreatePixelMap()
     {
         Color[] colors = texture.GetPixels();
+        //lay anh den trang
+        Color[] colorblackwhite = texture.GetPixels();
+        for (int i = 0; i < colorblackwhite.Length; i++)
+        {
+            float gray = (colorblackwhite[i].r + colorblackwhite[i].g + colorblackwhite[i].b) / 3;
+            colorblackwhite[i] = new Color(gray, gray, gray, colors[i].a);
+        }
+
+        /*   textureBlackandWhite = new Texture2D(texture.width, texture.height);
+           textureBlackandWhite.SetPixels(colorblackwhite);
+           textureBlackandWhite.Apply();*/
+
+
         centerCam = new Vector3((float)texture.width / 2, (float)texture.height / 2, -10) + Vector3.down * 3;
         camlookat.transform.position = centerCam;
         camMaxsize = Mathf.Max(texture.width, texture.height) + 3;
         virturalcam.m_Lens.OrthographicSize = camMaxsize;
 
+        allButon = new ColorRenPixel[0];
         Pixels = new Pixel[texture.width, texture.height];
+        _countColor = 1;
+        _allTypeOfColor = new Dictionary<Color, int>();
+        _allPixelGroups = new Dictionary<int, List<Pixel>>();
+        ColorSwatches = new List<ColorRenPixel>();
+        //
+        matrix = new bool[texture.width, texture.height];
 
+
+        Data.AddData(nowKey, matrix);
 
         for (int x = 0; x < texture.width; x++)
         {
@@ -84,6 +143,8 @@ public class GameManager : MonoBehaviour
                     Pixel pixel = Instantiate(objPrefab, _trs);
                     pixel.transform.position = new Vector3(x, y);
                     pixel.transform.name = $"square{x}-{y}";
+                    pixel.x = x;
+                    pixel.y = y;
                     Pixels[x, y] = pixel;
 
                     if (!_allTypeOfColor.ContainsKey(colors[x + y * texture.width]))//màu mới
@@ -111,12 +172,12 @@ public class GameManager : MonoBehaviour
         {
             pageSwipe.totalPages = (_countColor - 1) / 10;
         }
+
     }
 
     void CreateColorSwatches()
     {
         _colorButonParen.transform.position = Vector3.zero + new Vector3(0, Screen.width / 2.5f, 0);
-        Debug.Log(Screen.height);
 
         allButon = new ColorRenPixel[_allTypeOfColor.Count];
         foreach (KeyValuePair<Color, int> kvp in _allTypeOfColor)
@@ -179,5 +240,20 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("GamePlay");
 
     }
+    public void Clear()
+    {
 
+        for (int i = 0; i < _trs.transform.childCount; i++)
+        {
+            Destroy(_trs.transform.GetChild(i).gameObject);
+
+        }
+        for (int i = 0; i < pageParent.transform.childCount; i++)
+        {
+            Destroy(pageParent.transform.GetChild(i).gameObject);
+
+        }
+
+
+    }
 }
