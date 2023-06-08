@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class DailyDayImage : MonoBehaviour
 {
-    [SerializeField] TMP_Text d_text,_dateIcon;
+    [SerializeField] TMP_Text d_text, _dateIcon;
     [SerializeField] DayItem prefabs;
     [SerializeField] Transform parent;
     private int _day;
     List<DailyData> _dayBanner = new List<DailyData>();
-    private void Start()
+    private void Awake()
     {
 
         DateTime now = DateTime.Now;
@@ -29,6 +29,10 @@ public class DailyDayImage : MonoBehaviour
             _dayBanner.Add(DailyPrefManager.Instace.dailyDataSO.dailyData[i]);
         }
         SpawnDay();
+    }
+    private void Start()
+    {
+
     }
 
     public void SpawnDay()

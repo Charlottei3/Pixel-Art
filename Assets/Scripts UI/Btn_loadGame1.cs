@@ -14,14 +14,14 @@ public class Btn_loadGame1 : BaseButton
 
     private void Awake()
     {
-        _texture = picture.GetComponent<Image>().sprite.texture;
-        key = _texture.name;
+
 
     }
     public override void Start()
     {
         base.Start();
-
+        _texture = picture.GetComponent<Image>().sprite.texture;
+        key = _texture.name;
         UpdatePicture();
     }
     public void UpdatePicture()

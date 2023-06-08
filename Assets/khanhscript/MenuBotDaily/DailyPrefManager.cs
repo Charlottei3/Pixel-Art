@@ -12,6 +12,11 @@ public class DailyPrefManager : MonoBehaviour
     private void Awake()
     {
         _instace = this;
+        DateTime now = DateTime.Now;
+        MonthInYear = now.Month;
+        currentDay = now.Day;
+        SpawnerDailyItem();
+        MonthTransform();
     }
     [Header("------Item in Month-----")]
     [SerializeField] private DayItem _prefabs;
@@ -25,11 +30,7 @@ public class DailyPrefManager : MonoBehaviour
     private int currentDay;
     private void Start()
     {
-        DateTime now = DateTime.Now;
-        MonthInYear = now.Month;
-        currentDay = now.Day;
-        SpawnerDailyItem();
-        MonthTransform();
+
     }
 
 
