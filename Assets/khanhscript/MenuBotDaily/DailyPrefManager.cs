@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +14,7 @@ public class DailyPrefManager : MonoBehaviour
     private void Awake()
     {
         _instace = this;
-       
+
     }
     [Header("------Item in Month-----")]
     [SerializeField] private DayItem _prefabs;
@@ -22,6 +24,8 @@ public class DailyPrefManager : MonoBehaviour
     [Header("------Month in Year-----")]
     [SerializeField] private GameObject _prefabMonth;
     [SerializeField] private Transform parentMonth;
+    [SerializeField] private TMP_Text _tMonth;
+
     private int MonthInYear;
     private int currentDay;
     private void Start()
@@ -29,19 +33,37 @@ public class DailyPrefManager : MonoBehaviour
         DateTime now = DateTime.Now;
         MonthInYear = now.Month;
         currentDay = now.Day;
-        SpawnerDailyItem();
-        MonthTransform();
+        _tMonth.text = now.ToString("MMMM");
+        SpawnDayMonth();
     }
 
+    public void SpawnDayMonth()
+    {
+        for (int i = currentDay; i > 0; i--)
+        {
+            var _Item = Instantiate(_prefabs, parent[0]);
+            _Item.Text = i.ToString();
+
+            if (i == currentDay )
+            {
+                _Item.gameObject.SetActive(false);
+                Debug.Log(i);
+                continue;
+            }
+            _Item.Image = dailyDataSO.dailyData[i].Image;
+        }
+    }
+#if all_dayinyear
     public void MonthTransform()
     {
         for (int i = 0; i < parent.Count; i++)
         {
-            if (i < MonthInYear) continue;
+            if (i != MonthInYear) continue;
             parent[i].gameObject.SetActive(false);
         }
     }
 
+    
     public void SpawnerDailyItem()
     {
         for (int month = 0; month < parent.Count; month++)
@@ -57,7 +79,7 @@ public class DailyPrefManager : MonoBehaviour
                     _Item.gameObject.SetActive(false);
                     continue;
                 }
-                
+
                 if (month + 1 == MonthInYear && day > currentDay)
                 {
                     _Item.gameObject.SetActive(false);
@@ -69,7 +91,7 @@ public class DailyPrefManager : MonoBehaviour
             }
         }
     }
-
+#endif
 
 }
 
