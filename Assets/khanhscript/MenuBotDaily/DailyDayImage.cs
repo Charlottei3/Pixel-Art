@@ -11,7 +11,6 @@ public class DailyDayImage : MonoBehaviour
     [SerializeField] Transform parent;
     private int _day;
     List<DailyData> _dayBanner = new List<DailyData>();
-    public int DailyData;
     private void Awake()
     {
 
@@ -26,15 +25,16 @@ public class DailyDayImage : MonoBehaviour
         _dateIcon.text = now.Day.ToString();
         _day = now.Day;
 
+
+    }
+    private void Start()
+    {
+
         for (int i = 0; i < DailyPrefManager.Instace.dailyDataSO.dailyData.Count; i++)
         {
             _dayBanner.Add(DailyPrefManager.Instace.dailyDataSO.dailyData[i]);
         }
         SpawnDay();
-    }
-    private void Start()
-    {
-
     }
 
     public void SpawnDay()
