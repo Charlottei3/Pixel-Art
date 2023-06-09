@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
         CreatePixelMap();
 
         CreateColorSwatches();
-        Application.targetFrameRate = 60;
+
         canMoveCam = true;
         checkWin = new int[_countColor - 1, 2];
         LoadFilled();

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,17 +15,17 @@ public class BannerSlider : MonoBehaviour
     public UnityEvent<BannerView> OnPageChange;
 
     [SerializeField] private BannerScroll _scroller;
-   
+
 
     private void Start()
     {
         _scroller.OnChangeStarted.AddListener(PageScroller_PageChangeStarted);
         _scroller.OnChangeEnded.AddListener(PageScroll_PageChangeEnded);
 
-       
+
     }
 
-   
+
     public void AddPage(BannerView bannerView)
     {
         if (_pages.Count == 0)
@@ -72,7 +71,7 @@ public class BannerSlider : MonoBehaviour
         _dotsIndicator?.ChangeActiveDot(fromIndex, toIndex);
         OnPageChange?.Invoke(_pages[toIndex]);
     }
-   
-    
+
+
 }
 

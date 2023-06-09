@@ -80,6 +80,13 @@ public class Btn_loadGame1 : BaseButton
         //on button outgame
         //
         // LoadData
+
+        AddToListDrawed();
+    }
+    void AddToListDrawed()
+    {
+
+        //   Data.AddDrawed(this);
     }
 }
 

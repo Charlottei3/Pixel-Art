@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-
 public class PageDotIndicator : MonoBehaviour
 {
     [SerializeField] private PageDot _prefab;
@@ -22,12 +21,12 @@ public class PageDotIndicator : MonoBehaviour
     {
         PageDot dot = null;
 
-        if(!Application.isPlaying)
+        if (!Application.isPlaying)
         {
-            dot = (PageDot)PrefabUtility.InstantiatePrefab(_prefab, transform);
+            // dot = (PageDot)PrefabUtility.InstantiatePrefab(_prefab, transform);
         }
 
-        if(dot == null)
+        if (dot == null)
         {
             dot = Instantiate(_prefab, transform);
         }
@@ -37,7 +36,7 @@ public class PageDotIndicator : MonoBehaviour
         _dots.Add(dot);
 
         if (Application.isPlaying) return;
-        EditorUtility.SetDirty(this);
+        // EditorUtility.SetDirty(this);
     }
 
     public void ChangeActiveDot(int fromIndex, int toIndex)
@@ -46,14 +45,14 @@ public class PageDotIndicator : MonoBehaviour
         _dots[toIndex].ChangeActiveState(true);
     }
 
-    [CustomEditor(typeof(PageDotIndicator))]
-    public class PageDotIndicatorEditor : Editor
-    {
-        private PageDotIndicator _target;
+    /* [CustomEditor(typeof(PageDotIndicator))]
+     public class PageDotIndicatorEditor : Editor
+     {
+         private PageDotIndicator _target;
 
-        private void OnEnable()
-        {
-            _target = (PageDotIndicator)target;
-        }
-    }
+         private void OnEnable()
+         {
+             _target = (PageDotIndicator)target;
+         }
+     }*/
 }

@@ -1,8 +1,10 @@
 using Newtonsoft.Json;
 using System.Collections;
+//using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Windows;
+
 [System.Serializable]
 public static class Data
 {
@@ -40,6 +42,16 @@ public static class Data
         }
         else return null;
     }
+    //public static List<Btn_loadGame1> GetListDrawed()
+    //{
+    //    Load();
+    //    return gameData.list_drawed;
+    //}
+    //public static List<Btn_loadGame1> GetListDrawing()
+    //{
+    //    Load();
+    //    return gameData.list_drawing;
+    //}
     public static void AddData(string key, bool[,] value)
     {
         if (!gameData.allSaves.ContainsKey(key))
@@ -51,6 +63,28 @@ public static class Data
 
         Save();
     }
+    //public static void AddDrawed(Btn_loadGame1 input)
+    //{
+    //    if (!gameData.list_drawed.Contains(input))
+    //    {
+    //        gameData.list_drawed.Add(input);
+    //    }
+    //    else
+    //    { Debug.Log("Added"); }
+
+    //    Save();
+    //}
+    //public static void AddDrawing(Btn_loadGame1 input)
+    //{
+    //    if (!gameData.list_drawing.Contains(input))
+    //    {
+    //        gameData.list_drawing.Add(input);
+    //    }
+    //    else
+    //    { Debug.Log("Added"); }
+
+    //    Save();
+    //}
 
     public static void ClickTrue(string key, int i, int j)//save data everytime click true
     {
@@ -71,6 +105,8 @@ public static class Data
 public class PlayerData
 {
     public Dictionary<string, bool[,]> allSaves = new Dictionary<string, bool[,]>();
+    /*  public List<Btn_loadGame1> list_drawed = new List<Btn_loadGame1>();
+      public List<Btn_loadGame1> list_drawing = new List<Btn_loadGame1>();*/
 
 
 }
