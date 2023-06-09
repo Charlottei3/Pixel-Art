@@ -13,7 +13,6 @@ public class DailyDayImage : MonoBehaviour
     List<DailyData> _dayBanner = new List<DailyData>();
     private void Awake()
     {
-
         DateTime now = DateTime.Now;
         string dayofWeek = now.DayOfWeek.ToString();
         string dayofMonth = now.Month.ToString();
@@ -24,15 +23,15 @@ public class DailyDayImage : MonoBehaviour
         d_text.text = today;
         _dateIcon.text = now.Day.ToString();
         _day = now.Day;
-        for (int i = 0; i < DailyPrefManager.Instace.dailyDataSO.dailyData.Count; i++)
-        {
-            _dayBanner.Add(DailyPrefManager.Instace.dailyDataSO.dailyData[i]);
-        }
         SpawnDay();
     }
     private void Start()
     {
-
+       
+        for (int i = 0; i < DailyPrefManager.Instace.dailyDataSO.dailyData.Count; i++)
+        {
+            _dayBanner.Add(DailyPrefManager.Instace.dailyDataSO.dailyData[i]);
+        }
     }
 
     public void SpawnDay()

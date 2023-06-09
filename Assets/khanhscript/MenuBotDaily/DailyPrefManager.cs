@@ -30,7 +30,7 @@ public class DailyPrefManager : MonoBehaviour
     private int currentDay;
     private void Start()
     {
-
+        
     }
 
 
