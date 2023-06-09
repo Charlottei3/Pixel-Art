@@ -24,13 +24,7 @@ public class ContentManager : MonoBehaviour
                 listObj[i].gameObject.SetActive(false);
                 continue;
             }
-           
         }
-      /*  for (int i = 0; i < isOpen.Count; i++)
-        {
-            isOpen[i] = true;
-        }*/
-
     }
 
     private void ShowMonth(int month)
@@ -46,7 +40,6 @@ public class ContentManager : MonoBehaviour
             _childContent[month].gameObject.SetActive(false);
         }
         
-        Debug.Log(isOpen[month].ToString());
     }
     
    

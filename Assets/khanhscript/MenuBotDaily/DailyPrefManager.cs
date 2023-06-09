@@ -47,7 +47,7 @@ public class DailyPrefManager : MonoBehaviour
         for (int month = 0; month < parent.Count; month++)
         {
             int daysInCurrentMonth = DateTime.DaysInMonth(DateTime.Now.Year, month + 1);
-            if (month > MonthInYear - 1) break;
+            if (month >= MonthInYear) break;
             for (int day = daysInCurrentMonth; day >= 1; day--)
             {
                 var _Item = Instantiate(_prefabs, parent[month]);
