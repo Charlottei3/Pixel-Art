@@ -15,7 +15,6 @@ public class Btn_loadGame1 : BaseButton
     private void Awake()
     {
 
-
     }
     public override void Start()
     {
@@ -26,7 +25,6 @@ public class Btn_loadGame1 : BaseButton
     }
     public void UpdatePicture()
     {
-
         // picture.GetComponent<Image>().sprite = _texture;
         Texture2D loadTexure2 = new Texture2D(_texture.width, _texture.height, TextureFormat.RGBA32, false);
         Data.Load();
@@ -35,7 +33,6 @@ public class Btn_loadGame1 : BaseButton
         {
             matrix = new bool[_texture.width, _texture.height];
         }
-
 
         for (int x = 0; x < matrix.GetLength(0); x++)
         {
@@ -67,7 +64,6 @@ public class Btn_loadGame1 : BaseButton
         //tao sprite
         Sprite create = Sprite.Create(loadTexure2, new Rect(0, 0, loadTexure2.width, loadTexure2.height), Vector2.one * 0.5f);
         loadPicture.GetComponent<Image>().sprite = create;
-        Debug.Log("update");
     }
     protected override void OnClick()
     {

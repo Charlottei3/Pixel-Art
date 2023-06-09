@@ -18,11 +18,13 @@ public class ContentManager : MonoBehaviour
 
         for (int i = 0; i < listObj.Count; i++)
         {
+           
             if (i < currentMonth)
             {
                 listObj[i].gameObject.SetActive(false);
                 continue;
             }
+           
         }
       /*  for (int i = 0; i < isOpen.Count; i++)
         {

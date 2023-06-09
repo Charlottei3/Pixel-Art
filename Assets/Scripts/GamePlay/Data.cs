@@ -27,7 +27,6 @@ public static class Data
         else
         {
             var data = PlayerPrefs.GetString(saveData);//if co roi thi lay ra
-            Debug.Log(data);
             var readData = JsonConvert.DeserializeObject<PlayerData>(data);//
             gameData = readData;//lay ra game data
 

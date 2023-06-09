@@ -14,6 +14,11 @@ public class DailyDayImage : MonoBehaviour
     private void Awake()
     {
 
+       
+
+    }
+    private void Start()
+    {
         DateTime now = DateTime.Now;
         string dayofWeek = now.DayOfWeek.ToString();
         string dayofMonth = now.Day.ToString();
@@ -24,11 +29,6 @@ public class DailyDayImage : MonoBehaviour
         d_text.text = today;
         _dateIcon.text = now.Day.ToString();
         _day = now.Day;
-
-
-    }
-    private void Start()
-    {
 
         for (int i = 0; i < DailyPrefManager.Instace.dailyDataSO.dailyData.Count; i++)
         {
@@ -41,12 +41,13 @@ public class DailyDayImage : MonoBehaviour
     {
         for (int i = 0; i < _dayBanner.Count; i++)
         {
-            if (i == _day)
+            if (i != _day)
             {
-                var item = Instantiate(prefabs, parent);
-                item.Image = _dayBanner[i].Image;
                 continue;
             }
+            var item = Instantiate(prefabs, parent);
+            item.Image = _dayBanner[i].Image;
+            Debug.LogError(i);
         }
     }
 

@@ -12,11 +12,7 @@ public class DailyPrefManager : MonoBehaviour
     private void Awake()
     {
         _instace = this;
-        DateTime now = DateTime.Now;
-        MonthInYear = now.Month;
-        currentDay = now.Day;
-        SpawnerDailyItem();
-        MonthTransform();
+       
     }
     [Header("------Item in Month-----")]
     [SerializeField] private DayItem _prefabs;
@@ -30,9 +26,12 @@ public class DailyPrefManager : MonoBehaviour
     private int currentDay;
     private void Start()
     {
-        
+        DateTime now = DateTime.Now;
+        MonthInYear = now.Month;
+        currentDay = now.Day;
+        SpawnerDailyItem();
+        MonthTransform();
     }
-
 
     public void MonthTransform()
     {
@@ -48,7 +47,7 @@ public class DailyPrefManager : MonoBehaviour
         for (int month = 0; month < parent.Count; month++)
         {
             int daysInCurrentMonth = DateTime.DaysInMonth(DateTime.Now.Year, month + 1);
-
+            if (month > MonthInYear - 1) break;
             for (int day = daysInCurrentMonth; day >= 1; day--)
             {
                 var _Item = Instantiate(_prefabs, parent[month]);
@@ -58,7 +57,7 @@ public class DailyPrefManager : MonoBehaviour
                     _Item.gameObject.SetActive(false);
                     continue;
                 }
-
+                
                 if (month + 1 == MonthInYear && day > currentDay)
                 {
                     _Item.gameObject.SetActive(false);
