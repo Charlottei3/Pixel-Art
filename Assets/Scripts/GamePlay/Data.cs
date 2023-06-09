@@ -34,10 +34,9 @@ public static class Data
     }
     public static bool[,] GetMatrix(string key)
     {
-        Load();
-        if (gameData.allSaves.ContainsKey(key))
+        if (gameData.matrix.ContainsKey(key))
         {
-            return gameData.allSaves[key];
+            return gameData.matrix[key];
         }
         else return null;
     }
@@ -53,9 +52,9 @@ public static class Data
     //}
     public static void AddData(string key, bool[,] value)
     {
-        if (!gameData.allSaves.ContainsKey(key))
+        if (!gameData.matrix.ContainsKey(key))
         {
-            gameData.allSaves.Add(key, value);
+            gameData.matrix.Add(key, value);
         }
         else
         { Debug.Log("not find gamedata"); }
@@ -87,9 +86,9 @@ public static class Data
 
     public static void ClickTrue(string key, int i, int j)//save data everytime click true
     {
-        if (gameData.allSaves[key][i, j] == false)
+        if (gameData.matrix[key][i, j] == false)
         {
-            gameData.allSaves[key][i, j] = true;
+            gameData.matrix[key][i, j] = true;
 
         }
         /*  if (gameData.textureBlackWhite.ContainsKey(key))
@@ -103,7 +102,8 @@ public static class Data
 
 public class PlayerData
 {
-    public Dictionary<string, bool[,]> allSaves = new Dictionary<string, bool[,]>();
+    public Dictionary<string, bool[,]> matrix = new Dictionary<string, bool[,]>();
+    public Dictionary<string, bool> isdrawed = new Dictionary<string, bool>();
     /*  public List<Btn_loadGame1> list_drawed = new List<Btn_loadGame1>();
       public List<Btn_loadGame1> list_drawing = new List<Btn_loadGame1>();*/
 

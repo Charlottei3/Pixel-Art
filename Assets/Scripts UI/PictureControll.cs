@@ -19,6 +19,7 @@ public class PictureControll : MonoBehaviour
             Instance_picture = this;
             DontDestroyOnLoad(gameObject);
         }
+        Data.Load();
         Application.targetFrameRate = 100;
     }
 

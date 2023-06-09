@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Btn_loadGame1 : BaseButton
 {
+
     private Texture2D _texture;
     public GameObject picture;
     public GameObject loadPicture;
@@ -21,18 +22,31 @@ public class Btn_loadGame1 : BaseButton
         base.Start();
         _texture = picture.GetComponent<Image>().sprite.texture;
         key = _texture.name;
-        UpdatePicture();
+        if (Data.gameData.matrix.ContainsKey(key))
+        {
+            Data.gameData.isdrawed[key] = true;
+        }
+        else
+        {
+            Data.gameData.isdrawed[key] = false;
+        }
+        //neu co san anh den trang thi chi update khi ma  Data.gameData.isdrawed[key] = true;
+        if (Data.gameData.isdrawed[key])
+        {
+            UpdatePicture();
+        }
     }
     public void UpdatePicture()
     {
         // picture.GetComponent<Image>().sprite = _texture;
         Texture2D loadTexure2 = new Texture2D(_texture.width, _texture.height, TextureFormat.RGBA32, false);
-        Data.Load();
         matrix = Data.GetMatrix(key);
-        if (matrix == null)
+        if (matrix == null)//neu chua tang to tao ma tran zero de tao anh dentrang
         {
             matrix = new bool[_texture.width, _texture.height];
+
         }
+
 
         for (int x = 0; x < matrix.GetLength(0); x++)
         {
@@ -42,7 +56,7 @@ public class Btn_loadGame1 : BaseButton
                 {
                     Color color = new Color();
                     color = _texture.GetPixel(x, y);
-                    color = Color.Lerp(Color.white * color.grayscale, Color.white, 0f);
+                    color = Color.Lerp(new Color(color.grayscale, color.grayscale, color.grayscale), Color.white, 0f);
                     loadTexure2.SetPixel(x, y, color);
                     loadTexure2.Apply();
                 }
