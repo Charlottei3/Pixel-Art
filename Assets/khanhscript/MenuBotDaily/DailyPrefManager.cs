@@ -44,7 +44,7 @@ public class DailyPrefManager : MonoBehaviour
             var _Item = Instantiate(_prefabs, parent[0]);
             _Item.Text = i.ToString();
 
-            if (i == currentDay )
+            if (i == currentDay)
             {
                 _Item.gameObject.SetActive(false);
                 Debug.Log(i);

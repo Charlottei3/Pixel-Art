@@ -46,8 +46,10 @@ public class GameManager : MonoBehaviour
     public int[,] checkWin;
 
     [Header("Save")]
+    public ListDrawed listDrawed;
     public Texture2D textureBlackandWhite;
     public string nowKey;
+
     public bool[,] matrix;
     public Dictionary<string, bool[,]> allSaves = new Dictionary<string, bool[,]>();
     public Btn_loadGame1 update;
@@ -82,23 +84,23 @@ public class GameManager : MonoBehaviour
 
     private void LoadFilled()
     {
-
-        bool[,] matrix = Data.GetMatrix(nowKey);
-        Debug.Log($"{matrix.GetLength(0)}-{matrix.GetLength(1)}");
-        for (int x = 0; x < matrix.GetLength(0); x++)
+        if (Data.gameData.matrix.ContainsKey(nowKey))
         {
-            for (int y = 0; y < matrix.GetLength(1); y++)
+            bool[,] matrix2 = Data.GetMatrix(nowKey);
+            for (int x = 0; x < matrix2.GetLength(0); x++)
             {
-                if (matrix[x, y])
+                for (int y = 0; y < matrix2.GetLength(1); y++)
                 {
-                    if (Pixels[x, y] != null)
-                        Pixels[x, y].FillOnLoad();
+                    if (matrix2[x, y])
+                    {
+                        if (Pixels[x, y] != null)
+                            Pixels[x, y].FillOnLoad();
 
 
+                    }
                 }
             }
         }
-
     }
 
     public void CreatePixelMap()
@@ -132,7 +134,7 @@ public class GameManager : MonoBehaviour
         matrix = new bool[texture.width, texture.height];
 
 
-        Data.AddData(nowKey, matrix);
+
 
         for (int x = 0; x < texture.width; x++)
         {
@@ -201,7 +203,9 @@ public class GameManager : MonoBehaviour
             for (int k = (i - 1) * 10; k < i * 10; k++)
             {
                 if (k >= allButon.Length) break;
-                allButon[k].transform.parent = x.transform;
+                //   allButon[k].transform.parent = x.transform;
+                allButon[k].transform.SetParent(x.transform);
+
 
             }
 

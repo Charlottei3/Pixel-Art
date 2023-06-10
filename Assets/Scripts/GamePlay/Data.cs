@@ -52,13 +52,20 @@ public static class Data
     //}
     public static void AddData(string key, bool[,] value)
     {
+
         if (!gameData.matrix.ContainsKey(key))
         {
             gameData.matrix.Add(key, value);
+            Debug.Log("add keymatrix:" + key);
         }
-        else
-        { Debug.Log("not find gamedata"); }
 
+        if (!gameData.isdrawed.ContainsKey(key))
+        {
+            gameData.isdrawed.Add(key, true);
+            Debug.Log("add key:" + key);
+
+        }
+        else { Debug.Log(gameData.isdrawed[key]); }
         Save();
     }
     //public static void AddDrawed(Btn_loadGame1 input)
@@ -104,8 +111,7 @@ public class PlayerData
 {
     public Dictionary<string, bool[,]> matrix = new Dictionary<string, bool[,]>();
     public Dictionary<string, bool> isdrawed = new Dictionary<string, bool>();
-    /*  public List<Btn_loadGame1> list_drawed = new List<Btn_loadGame1>();
-      public List<Btn_loadGame1> list_drawing = new List<Btn_loadGame1>();*/
+
 
 
 }

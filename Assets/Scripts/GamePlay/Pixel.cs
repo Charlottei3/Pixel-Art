@@ -83,6 +83,11 @@ public class Pixel : MonoBehaviour
     }
     public void Fill()
     {
+        if (!Data.gameData.matrix.ContainsKey(GameManager.Instance.nowKey))
+        {
+            Data.AddData(GameManager.Instance.nowKey, GameManager.Instance.matrix);
+            GameManager.Instance.listDrawed.AddBtnLoad(GameManager.Instance.update, GameManager.Instance.listDrawed.saveDrawed);//them vao listdraw btn
+        }
         isFilledInTrue = true;
         isFlilled = true;
         _colorRen.color = _colorTrue;
