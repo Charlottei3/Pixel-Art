@@ -6,48 +6,48 @@ using UnityEngine.UI;
 
 public class Btn_loadGame1 : BaseButton
 {
-    
-    private Texture2D _texture;
+    public bool isInDrawed = false;
+    public Texture2D _texture;
     public GameObject picture;
     public GameObject loadPicture;
     bool[,] matrix = null;
     public string key;
 
-   
     private void Awake()
     {
-      
+
     }
-    
     public override void Start()
     {
         base.Start();
         _texture = picture.GetComponent<Image>().sprite.texture;
         key = _texture.name;
-        if (Data.gameData.matrix.ContainsKey(key))
-        {
-            Data.gameData.isdrawed[key] = true;
-        }
-        else
-        {
-            Data.gameData.isdrawed[key] = false;
-        }
         //neu co san anh den trang thi chi update khi ma  Data.gameData.isdrawed[key] = true;
-        if (Data.gameData.isdrawed[key])
+        if (Data.gameData.isdrawed.ContainsKey(key))
         {
-            UpdatePicture();
+            if (Data.gameData.isdrawed[key])
+            {
+                UpdatePicture();
+                if (!isInDrawed)
+                {
+                    GameManager.Instance.listDrawed.listDrawed.Add(this);
+                }
+            }
         }
     }
     public void UpdatePicture()
     {
-        // picture.GetComponent<Image>().sprite = _texture;
+
+        // picture.GetComponent<Image>().sprite = _texture
         Texture2D loadTexure2 = new Texture2D(_texture.width, _texture.height, TextureFormat.RGBA32, false);
+        Debug.Log("1");
         matrix = Data.GetMatrix(key);
         if (matrix == null)//neu chua tang to tao ma tran zero de tao anh dentrang
         {
             matrix = new bool[_texture.width, _texture.height];
 
         }
+
 
         for (int x = 0; x < matrix.GetLength(0); x++)
         {
@@ -80,6 +80,7 @@ public class Btn_loadGame1 : BaseButton
         Sprite create = Sprite.Create(loadTexure2, new Rect(0, 0, loadTexure2.width, loadTexure2.height), Vector2.one * 0.5f);
         loadPicture.GetComponent<Image>().sprite = create;
     }
+
     protected override void OnClick()
     {
         PictureControll.Instance_picture.nowTexure = _texture;
@@ -92,12 +93,6 @@ public class Btn_loadGame1 : BaseButton
         //
         // LoadData
 
-        AddToListDrawed();
-    }
-    void AddToListDrawed()
-    {
-
-        //   Data.AddDrawed(this);
     }
 }
 

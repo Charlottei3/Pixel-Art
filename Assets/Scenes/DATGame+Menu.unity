@@ -774,11 +774,11 @@ PrefabInstance:
     - target: {fileID: 2442706239453152756, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 696e116c159fbe643b8af8e5b4adeffb, type: 3}
+      objectReference: {fileID: 21300000, guid: 4df6ee8462bb8a5448d3a90b516d5c8a, type: 3}
     - target: {fileID: 3372293771341932281, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 696e116c159fbe643b8af8e5b4adeffb, type: 3}
+      objectReference: {fileID: 21300000, guid: cf592112c04c7544da9f329f4c56abce, type: 3}
     - target: {fileID: 4738671431267314304, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Name
       value: Chosse Image 2.0 (2)
@@ -1150,11 +1150,11 @@ PrefabInstance:
     - target: {fileID: 2442706239453152756, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4df6ee8462bb8a5448d3a90b516d5c8a, type: 3}
+      objectReference: {fileID: 21300000, guid: bdd66bfc6000cdb4f809def026acc321, type: 3}
     - target: {fileID: 3372293771341932281, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4df6ee8462bb8a5448d3a90b516d5c8a, type: 3}
+      objectReference: {fileID: 21300000, guid: 060deb27210fb2a47a86cc68fd1b1ae4, type: 3}
     - target: {fileID: 4738671431267314304, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Name
       value: Chosse Image 2.0 (1)
@@ -1649,11 +1649,11 @@ PrefabInstance:
     - target: {fileID: 2442706239453152756, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 98b0bf0a6deb577478e8127d58c86852, type: 3}
+      objectReference: {fileID: 21300000, guid: 2df8431953950ff49a9c0c10708c34b6, type: 3}
     - target: {fileID: 3372293771341932281, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 98b0bf0a6deb577478e8127d58c86852, type: 3}
+      objectReference: {fileID: 21300000, guid: 02d081beca1962f4ea5f4c5d26c2e00d, type: 3}
     - target: {fileID: 4738671431267314304, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Name
       value: Chosse Image 2.0 (3)
@@ -2328,6 +2328,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7637088376573348482}
     m_Modifications:
+    - target: {fileID: 2442706239453152756, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0dab9a370e88d6d4091035ac49c7d60c, type: 3}
+    - target: {fileID: 3372293771341932281, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0503a407a92e3b041b2d323663ee6db3, type: 3}
     - target: {fileID: 4738671431267314304, guid: a746ea1a3b409374ab4a76c12782f712, type: 3}
       propertyPath: m_Name
       value: Chosse Image 2.0
@@ -3432,6 +3440,7 @@ MonoBehaviour:
   allButon: []
   Menu: {fileID: 668591186}
   btnOutGame: {fileID: 1477386822}
+  listDrawed: {fileID: 3920004668296908286}
   textureBlackandWhite: {fileID: 0}
   nowKey: 
   update: {fileID: 0}
@@ -13760,7 +13769,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.00048828125}
-  m_SizeDelta: {x: 0, y: 570}
+  m_SizeDelta: {x: 0, y: 952.67}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5347106083191493089
 CanvasRenderer:
@@ -15131,7 +15140,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 550, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1060, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7637088376573348485

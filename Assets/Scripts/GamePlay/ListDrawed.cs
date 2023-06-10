@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 
 public class ListDrawed : MonoBehaviour
 {
+    public Dictionary<Btn_loadGame1, Btn_loadGame1> DictionaryCopyOnDrawed = new Dictionary<Btn_loadGame1, Btn_loadGame1>();
     public List<Btn_loadGame1> listDrawed;
     public List<Btn_loadGame1> listDrawing;
     public Transform saveDrawed;
@@ -20,13 +21,20 @@ public class ListDrawed : MonoBehaviour
         //add btn
         foreach (var btn in listDrawed)
         {
-            Btn_loadGame1 copy = Instantiate(btn);
-            copy.transform.parent = saveDrawed;
+            AddBtnLoad(btn, saveDrawed);
         }
         foreach (var btn in listDrawing)
         {
-            Btn_loadGame1 copy = Instantiate(btn);
-            copy.transform.parent = saveDrawing;
+            AddBtnLoad(btn, saveDrawing);
         }
     }
+    public void AddBtnLoad(Btn_loadGame1 Btn_input, Transform parent)
+    {
+        Btn_loadGame1 copy = Instantiate(Btn_input);
+        copy.isInDrawed = true;
+        copy.name = Btn_input.key;
+        copy.transform.SetParent(parent);
+        DictionaryCopyOnDrawed.Add(copy, Btn_input);
+    }
+
 }
