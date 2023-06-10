@@ -52,7 +52,7 @@ public class DailyPrefManager : MonoBehaviour
             }
             _Item.Image = dailyDataSO.dailyData[i].Image;
            
-            Btn_loadGame1.Instance.loadPicture.GetComponent<Image>().sprite = whileBlackSO.dailyData[i].Image;
+            //Btn_loadGame1.Instance.loadPicture.GetComponent<Image>().sprite = whileBlackSO.dailyData[i].Image;
         }
     }
 #if all_dayinyear

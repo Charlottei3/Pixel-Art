@@ -46,7 +46,7 @@ public class DailyDayImage : MonoBehaviour
             }
             var item = Instantiate(prefabs, parent);
             item.Image = _dayBanner[i].Image;
-            Btn_loadGame1.Instance.loadPicture.GetComponent<Image>().sprite = DailyPrefManager.Instace.whileBlackSO.dailyData[i].Image;
+            //Btn_loadGame1.Instance.loadPicture.GetComponent<Image>().sprite = DailyPrefManager.Instace.whileBlackSO.dailyData[i].Image;
         }
     }
 

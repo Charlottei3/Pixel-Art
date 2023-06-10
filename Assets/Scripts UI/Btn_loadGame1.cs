@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class Btn_loadGame1 : BaseButton
 {
-    private static Btn_loadGame1 _instance;
-    public static Btn_loadGame1 Instance { get { return _instance; } }
+    
     private Texture2D _texture;
     public GameObject picture;
     public GameObject loadPicture;
@@ -17,7 +16,7 @@ public class Btn_loadGame1 : BaseButton
    
     private void Awake()
     {
-       _instance = this;
+      
     }
     
     public override void Start()
