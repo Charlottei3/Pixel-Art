@@ -20,4 +20,5 @@ public class DayItem : MonoBehaviour
         get { return _image.sprite; }
         set { _image.sprite = value; }
     }
+
 }

@@ -1264,6 +1264,7 @@ MonoBehaviour:
   - {fileID: 2866769802057257902}
   _prefabMonth: {fileID: 1672882692484724851, guid: a34498998985773439e8ad21a4adbb42, type: 3}
   parentMonth: {fileID: 6357671645924551371}
+  _tMonth: {fileID: 0}
 --- !u!1 &2866769801557991084
 GameObject:
   m_ObjectHideFlags: 0

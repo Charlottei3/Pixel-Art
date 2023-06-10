@@ -6,17 +6,20 @@ using UnityEngine.UI;
 
 public class Btn_loadGame1 : BaseButton
 {
-
+    private static Btn_loadGame1 _instance;
+    public static Btn_loadGame1 Instance { get { return _instance; } }
     private Texture2D _texture;
     public GameObject picture;
     public GameObject loadPicture;
     bool[,] matrix = null;
     public string key;
 
+   
     private void Awake()
     {
-
+       _instance = this;
     }
+    
     public override void Start()
     {
         base.Start();
@@ -46,7 +49,6 @@ public class Btn_loadGame1 : BaseButton
             matrix = new bool[_texture.width, _texture.height];
 
         }
-
 
         for (int x = 0; x < matrix.GetLength(0); x++)
         {
