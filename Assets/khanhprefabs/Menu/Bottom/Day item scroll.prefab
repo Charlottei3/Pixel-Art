@@ -430,6 +430,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 6939200603206048729}
+  isInDrawed: 0
+  _texture: {fileID: 0}
   picture: {fileID: 6446798907652856165}
   loadPicture: {fileID: 7681155959221748663}
   key: 
@@ -490,4 +492,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 1759659958100885721}
+  _loadImage: {fileID: 4687157614401479889}
   _lable: {fileID: 7855024180159492913}

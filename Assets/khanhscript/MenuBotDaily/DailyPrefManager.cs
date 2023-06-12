@@ -10,7 +10,7 @@ public class DailyPrefManager : MonoBehaviour
 {
     private static DailyPrefManager _instace;
     public static DailyPrefManager Instace { get { return _instace; } }
-    [SerializeField] public DailyDataSO dailyDataSO,whileBlackSO;
+    [SerializeField] public DailyDataSO dailyDataSO, blackwhiteDayly;
     private void Awake()
     {
         _instace = this;
@@ -25,7 +25,6 @@ public class DailyPrefManager : MonoBehaviour
     [SerializeField] private GameObject _prefabMonth;
     [SerializeField] private Transform parentMonth;
     [SerializeField] private TMP_Text _tMonth;
-
 
     private int MonthInYear;
     private int currentDay;
@@ -48,11 +47,11 @@ public class DailyPrefManager : MonoBehaviour
             if (i == currentDay)
             {
                 _Item.gameObject.SetActive(false);
+                Debug.Log(i);
                 continue;
             }
             _Item.Image = dailyDataSO.dailyData[i].Image;
-           
-            //Btn_loadGame1.Instance.loadPicture.GetComponent<Image>().sprite = whileBlackSO.dailyData[i].Image;
+            _Item.LoadImage = blackwhiteDayly.dailyData[i].Image;
         }
     }
 #if all_dayinyear

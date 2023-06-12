@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DayItem : MonoBehaviour
 {
     [SerializeField] Image _image;
+    [SerializeField] Image _loadImage;
     [SerializeField] TMP_Text _lable;
 
     public string Text
@@ -20,5 +21,9 @@ public class DayItem : MonoBehaviour
         get { return _image.sprite; }
         set { _image.sprite = value; }
     }
-
+    public Sprite LoadImage
+    {
+        get { return _loadImage.sprite; }
+        set { _loadImage.sprite = value; }
+    }
 }

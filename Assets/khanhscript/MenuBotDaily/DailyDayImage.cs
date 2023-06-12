@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DailyDayImage : MonoBehaviour
 {
@@ -12,9 +11,12 @@ public class DailyDayImage : MonoBehaviour
     [SerializeField] Transform parent;
     private int _day;
     List<DailyData> _dayBanner = new List<DailyData>();
+
     private void Awake()
     {
-       
+
+
+
     }
     private void Start()
     {
@@ -46,7 +48,8 @@ public class DailyDayImage : MonoBehaviour
             }
             var item = Instantiate(prefabs, parent);
             item.Image = _dayBanner[i].Image;
-            //Btn_loadGame1.Instance.loadPicture.GetComponent<Image>().sprite = DailyPrefManager.Instace.whileBlackSO.dailyData[i].Image;
+            item.LoadImage = DailyPrefManager.Instace.blackwhiteDayly.dailyData[i].Image;
+            Debug.LogError(i);
         }
     }
 
