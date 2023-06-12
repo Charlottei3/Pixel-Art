@@ -7,7 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DailyDataSO", menuName = "ScriptTableObject/DailySO")]
 public class DailyDataSO : ScriptableObject
 {
-    
+
     public DailyDataSO Instance
     {
         get
@@ -15,7 +15,8 @@ public class DailyDataSO : ScriptableObject
             if (instance != null)
             {
                 return instance;
-            }else
+            }
+            else
             {
                 instance = Resources.Load("DailyDataSO") as DailyDataSO;
                 return instance;
@@ -29,13 +30,13 @@ public class DailyDataSO : ScriptableObject
 [Serializable]
 public class DailyData
 {
-    [SerializeField] Sprite sprites ;
+    [SerializeField] Sprite sprites;
 
     public Sprite Image
     {
         get
         {
-           return sprites;
+            return sprites;
         }
     }
 }

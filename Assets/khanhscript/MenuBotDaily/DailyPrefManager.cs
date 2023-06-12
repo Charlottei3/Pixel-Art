@@ -10,7 +10,7 @@ public class DailyPrefManager : MonoBehaviour
 {
     private static DailyPrefManager _instace;
     public static DailyPrefManager Instace { get { return _instace; } }
-    [SerializeField] public DailyDataSO dailyDataSO;
+    [SerializeField] public DailyDataSO dailyDataSO, blackwhiteDayly;
     private void Awake()
     {
         _instace = this;
@@ -51,6 +51,7 @@ public class DailyPrefManager : MonoBehaviour
                 continue;
             }
             _Item.Image = dailyDataSO.dailyData[i].Image;
+            _Item.LoadImage = blackwhiteDayly.dailyData[i].Image;
         }
     }
 #if all_dayinyear

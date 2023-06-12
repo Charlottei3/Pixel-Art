@@ -38,4 +38,5 @@ public class AnimationHelper : MonoBehaviour
         }
         transform.anchoredPosition = startposition;
     }
+
 }

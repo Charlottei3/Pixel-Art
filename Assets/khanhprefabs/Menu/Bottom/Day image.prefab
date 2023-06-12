@@ -139,6 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 2516378618611729316}
+  isInDrawed: 0
+  _texture: {fileID: 0}
   picture: {fileID: 2004284734237966616}
   loadPicture: {fileID: 5074487760513761282}
   key: 
@@ -199,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 6542769574141319332}
+  _loadImage: {fileID: 1031241579925455987}
   _lable: {fileID: 0}
 --- !u!1 &5074487760513761282
 GameObject:
