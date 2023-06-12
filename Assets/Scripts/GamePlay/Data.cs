@@ -66,6 +66,13 @@ public static class Data
 
         }
         else { Debug.Log(gameData.isdrawed[key]); }
+        if (!gameData.isComplete.ContainsKey(key))
+        {
+            gameData.isComplete.Add(key, true);
+            Debug.Log("add key:" + key);
+
+        }
+        else { Debug.Log(gameData.isComplete[key]); }
         Save();
     }
     //public static void AddDrawed(Btn_loadGame1 input)
@@ -111,6 +118,7 @@ public class PlayerData
 {
     public Dictionary<string, bool[,]> matrix = new Dictionary<string, bool[,]>();
     public Dictionary<string, bool> isdrawed = new Dictionary<string, bool>();
+    public Dictionary<string, bool> isComplete = new Dictionary<string, bool>();
 
 
 

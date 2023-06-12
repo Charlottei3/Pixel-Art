@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     public bool[,] matrix;
     public Dictionary<string, bool[,]> allSaves = new Dictionary<string, bool[,]>();
-    public Btn_loadGame1 update;
+    public Btn_loadGame1 nowBtnLoadGame;
     void Awake()
     {
 
@@ -106,6 +106,15 @@ public class GameManager : MonoBehaviour
     public void CreatePixelMap()
     {
         Color[] colors = texture.GetPixels();
+
+        for (int i = 0; i < colors.Length; i++)
+        {
+            if (colors[i].a >= 0.5f)
+            {
+                colors[i] = new Color(MathF.Round(colors[i].r, 1), MathF.Round(colors[i].g, 1), MathF.Round(colors[i].b, 1), 1);
+            }
+        }
+
         //lay anh den trang
         Color[] colorblackwhite = texture.GetPixels();
         for (int i = 0; i < colorblackwhite.Length; i++)

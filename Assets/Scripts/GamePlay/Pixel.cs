@@ -77,7 +77,7 @@ public class Pixel : MonoBehaviour
             GameManager.Instance.Clear();
 
             GameManager.Instance.btnOutGame.gameObject.SetActive(false);
-            GameManager.Instance.update.UpdatePicture();
+            GameManager.Instance.nowBtnLoadGame.UpdatePicture();
             /*GameManager.Instance.LoadPicture();*/
         }
     }
@@ -86,7 +86,7 @@ public class Pixel : MonoBehaviour
         if (!Data.gameData.matrix.ContainsKey(GameManager.Instance.nowKey))
         {
             Data.AddData(GameManager.Instance.nowKey, GameManager.Instance.matrix);
-            GameManager.Instance.listDrawed.AddBtnLoad(GameManager.Instance.update, GameManager.Instance.listDrawed.saveDrawed);//them vao listdraw btn
+            GameManager.Instance.listDrawed.AddBtnLoad(GameManager.Instance.nowBtnLoadGame, GameManager.Instance.listDrawed.saveDrawed);//them vao listdraw btn
         }
         isFilledInTrue = true;
         isFlilled = true;
@@ -109,8 +109,12 @@ public class Pixel : MonoBehaviour
             GameManager.Instance.Clear();
 
             GameManager.Instance.btnOutGame.gameObject.SetActive(false);
-            GameManager.Instance.update.UpdatePicture();
+            GameManager.Instance.nowBtnLoadGame.UpdatePicture();
             /*GameManager.Instance.LoadPicture();*/
+            GameManager.Instance.nowBtnLoadGame.btn.enabled = false;
+            GameManager.Instance.nowBtnLoadGame.complete.SetActive(true);
+            GameManager.Instance.nowBtnLoadGame.isComplete = true;
+            Data.gameData.isComplete[GameManager.Instance.nowKey] = true;
         }
     }
     private float UpdateSlide(int id)

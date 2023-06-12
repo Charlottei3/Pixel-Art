@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 5430380825406941392}
   - component: {fileID: 6467541969910144756}
   m_Layer: 5
-  m_Name: Chosse Image 2
+  m_Name: Chosse Image 2.0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -294,8 +294,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 6467541969910144756}
+  isInDrawed: 0
+  _texture: {fileID: 0}
   picture: {fileID: 6987911491960642632}
   loadPicture: {fileID: 3372293771341932283}
+  complete: {fileID: 3402026134124708283}
+  btn: {fileID: 6467541969910144756}
   key: 
 --- !u!114 &6467541969910144756
 MonoBehaviour:

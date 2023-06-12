@@ -7,9 +7,12 @@ using UnityEngine.UI;
 public class Btn_loadGame1 : BaseButton
 {
     public bool isInDrawed = false;
+    public bool isComplete = false;
     public Texture2D _texture;
     public GameObject picture;
     public GameObject loadPicture;
+    public GameObject complete;
+    public Button btn;
     bool[,] matrix = null;
     public string key;
 
@@ -37,7 +40,16 @@ public class Btn_loadGame1 : BaseButton
     }
     public void UpdatePicture()
     {
-
+        if (Data.gameData.isComplete.ContainsKey(key))
+        {
+            if (Data.gameData.isComplete[key])
+            {
+                btn.enabled = false;
+                complete.SetActive(true);
+                isComplete = true;
+                Data.gameData.isComplete[GameManager.Instance.nowKey] = true;
+            }
+        }
         // picture.GetComponent<Image>().sprite = _texture
         Texture2D loadTexure2 = new Texture2D(_texture.width, _texture.height, TextureFormat.RGBA32, false);
         Debug.Log("1");
@@ -88,7 +100,7 @@ public class Btn_loadGame1 : BaseButton
         GameManager.Instance.Menu.SetActive(false);
         GameManager.Instance.btnOutGame.gameObject.SetActive(true);
         GameManager.Instance.NewGame();
-        GameManager.Instance.update = this;
+        GameManager.Instance.nowBtnLoadGame = this;
         //on button outgame
         //
         // LoadData

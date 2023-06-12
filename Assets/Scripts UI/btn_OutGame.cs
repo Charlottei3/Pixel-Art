@@ -15,9 +15,9 @@ public class btn_OutGame : BaseButton
         {
             if (Data.gameData.isdrawed[GameManager.Instance.nowKey] == true)
             {
-                GameManager.Instance.update.UpdatePicture();//update anh nut vua nhan
+                GameManager.Instance.nowBtnLoadGame.UpdatePicture();//update anh nut vua nhan
                 //update anh trong drawed
-                if (!GameManager.Instance.update.isInDrawed)//ko phai trong drawed
+                if (!GameManager.Instance.nowBtnLoadGame.isInDrawed)//ko phai trong drawed
                 {
                     Debug.Log("1");
                     Transform find = GameManager.Instance.listDrawed.saveDrawed.Find(GameManager.Instance.nowKey);
@@ -25,10 +25,10 @@ public class btn_OutGame : BaseButton
                     if (find != null) { find.GetComponent<Btn_loadGame1>().UpdatePicture(); Debug.Log("3"); }
 
                 }
-                if (GameManager.Instance.update.isInDrawed)//neu ben trong toi da to thi tim ban goc de update theo
+                if (GameManager.Instance.nowBtnLoadGame.isInDrawed)//neu ben trong toi da to thi tim ban goc de update theo
                 {
                     Debug.Log("4");
-                    GameManager.Instance.listDrawed.DictionaryCopyOnDrawed[GameManager.Instance.update].UpdatePicture();//tim ben ngoai draw
+                    GameManager.Instance.listDrawed.DictionaryCopyOnDrawed[GameManager.Instance.nowBtnLoadGame].UpdatePicture();//tim ben ngoai draw
                     Debug.Log("5");
                 }
             }
