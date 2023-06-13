@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     List<ColorRenPixel> ColorSwatches = new List<ColorRenPixel>();
     [SerializeField] public ColorRenPixel[] allButon;
     public GameObject Menu;
+    public GameObject AllBook;
     public btn_OutGame btnOutGame;
     public int[,] checkWin;
 

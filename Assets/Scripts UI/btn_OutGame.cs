@@ -6,8 +6,9 @@ public class btn_OutGame : BaseButton
 {
     protected override void OnClick()
     {
-
+        Debug.Log("out");
         GameManager.Instance.Menu.SetActive(true);
+        GameManager.Instance.AllBook.SetActive(true);
         GameManager.Instance.Clear();
 
         GameManager.Instance.btnOutGame.gameObject.SetActive(false);

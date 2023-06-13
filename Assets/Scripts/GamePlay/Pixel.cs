@@ -74,6 +74,7 @@ public class Pixel : MonoBehaviour
         if (CheckCompleteAllColor())
         {
             GameManager.Instance.Menu.SetActive(true);
+            GameManager.Instance.AllBook.SetActive(true);
             GameManager.Instance.Clear();
 
             GameManager.Instance.btnOutGame.gameObject.SetActive(false);
@@ -106,6 +107,7 @@ public class Pixel : MonoBehaviour
         if (CheckCompleteAllColor())
         {
             GameManager.Instance.Menu.SetActive(true);
+            GameManager.Instance.AllBook.SetActive(true);
             GameManager.Instance.Clear();
 
             GameManager.Instance.btnOutGame.gameObject.SetActive(false);

@@ -112,6 +112,9 @@ public class Btn_loadGame1 : BaseButton
         GameManager.Instance.nowKey = key;
         GameManager.Instance.Menu.SetActive(false);
         GameManager.Instance.btnOutGame.gameObject.SetActive(true);
+
+        GameManager.Instance.AllBook.SetActive(false);
+
         GameManager.Instance.NewGame();
         GameManager.Instance.nowBtnLoadGame = this;
         //on button outgame
