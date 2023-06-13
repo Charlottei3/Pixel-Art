@@ -68,7 +68,7 @@ public static class Data
         else { Debug.Log(gameData.isdrawed[key]); }
         if (!gameData.isComplete.ContainsKey(key))
         {
-            gameData.isComplete.Add(key, true);
+            gameData.isComplete.Add(key, false);
             Debug.Log("add key:" + key);
 
         }

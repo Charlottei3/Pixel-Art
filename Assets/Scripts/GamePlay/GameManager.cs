@@ -30,8 +30,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Slider slider;
     [SerializeField] List<Pixel> _list;
     [SerializeField] private int _countColor = 1;
-    Camera Camera;
+    Camera camera;
     [SerializeField] private CinemachineVirtualCamera virturalcam;
+    public CinemachineTransposer transposer;
     [SerializeField] private Transform camlookat;
     public Vector3 centerCam;
     public float zoomMultiplier = 2;
@@ -58,7 +59,14 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
 
-        Camera = Camera.main;
+        camera = Camera.main;
+        camera.gameObject.TryGetComponent<CinemachineBrain>(out var brain);
+        if (brain == null) camera.gameObject.AddComponent<CinemachineBrain>();
+        brain.m_DefaultBlend.m_Time = 1;
+        brain.m_ShowDebugText = true;
+
+        CinemachineTransposer Addtransposer = virturalcam.AddCinemachineComponent<CinemachineTransposer>();
+        transposer = Addtransposer;
 
 
     }
@@ -70,7 +78,11 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
-
+        isClick = false;
+        canMoveCam = true;
+        isFirstClick = false;
+        isChosseFirstColor = false;
+        _countColor = 1;
         texture = PictureControll.Instance_picture.nowTexure;
         CreatePixelMap();
 
@@ -126,13 +138,17 @@ public class GameManager : MonoBehaviour
         /*   textureBlackandWhite = new Texture2D(texture.width, texture.height);
            textureBlackandWhite.SetPixels(colorblackwhite);
            textureBlackandWhite.Apply();*/
-
-
-        centerCam = new Vector3((float)texture.width / 2, (float)texture.height / 2, -10) + Vector3.down * 3;
-        camlookat.transform.position = centerCam;
+        transposer.m_XDamping = 0f;
+        transposer.m_YDamping = 0f;
+        StartCoroutine(TurnOnDamping());
+        Debug.Log("start");
         camMaxsize = Mathf.Max(texture.width, texture.height) + 3;
-        virturalcam.m_Lens.OrthographicSize = camMaxsize;
+        centerCam = new Vector3((float)(texture.width - 1) / 2, ((float)texture.height - 1) / 2, -10) + Vector3.down * 3;
+        camlookat.transform.position = centerCam;
 
+        virturalcam.m_Lens.OrthographicSize = camMaxsize;
+        ////////transposer.m_XDamping = 0.75f;
+        ////////transposer.m_YDamping = 0.75f;
         allButon = new ColorRenPixel[0];
         Pixels = new Pixel[texture.width, texture.height];
         _countColor = 1;
@@ -141,6 +157,7 @@ public class GameManager : MonoBehaviour
         ColorSwatches = new List<ColorRenPixel>();
         //
         matrix = new bool[texture.width, texture.height];
+        Debug.Log($"{texture.width}-{texture.height}");
 
 
 
@@ -186,6 +203,12 @@ public class GameManager : MonoBehaviour
 
     }
 
+    IEnumerator TurnOnDamping()
+    {
+        yield return new WaitForEndOfFrame();
+        transposer.m_XDamping = 0.75f;
+        transposer.m_YDamping = 0.75f;
+    }
     void CreateColorSwatches()
     {
         _colorButonParen.transform.position = Vector3.zero + new Vector3(0, Screen.width / 2.5f, 0);

@@ -111,10 +111,24 @@ public class Pixel : MonoBehaviour
             GameManager.Instance.btnOutGame.gameObject.SetActive(false);
             GameManager.Instance.nowBtnLoadGame.UpdatePicture();
             /*GameManager.Instance.LoadPicture();*/
+
             GameManager.Instance.nowBtnLoadGame.btn.enabled = false;
             GameManager.Instance.nowBtnLoadGame.complete.SetActive(true);
             GameManager.Instance.nowBtnLoadGame.isComplete = true;
             Data.gameData.isComplete[GameManager.Instance.nowKey] = true;
+
+
+            if (!GameManager.Instance.nowBtnLoadGame.isInDrawed)//ko phai trong drawed
+            {
+                Transform find = GameManager.Instance.listDrawed.saveDrawed.Find(GameManager.Instance.nowKey);
+                if (find != null) { find.GetComponent<Btn_loadGame1>().UpdatePicture(); }
+
+            }
+            if (GameManager.Instance.nowBtnLoadGame.isInDrawed)//neu ben trong toi da to thi tim ban goc de update theo
+            {
+                GameManager.Instance.listDrawed.DictionaryCopyOnDrawed[GameManager.Instance.nowBtnLoadGame].UpdatePicture();//tim ben ngoai dra
+            }
+            Data.Save();
         }
     }
     private float UpdateSlide(int id)

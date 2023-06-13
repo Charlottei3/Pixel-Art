@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dailyData:
   - sprites: {fileID: 21300000, guid: ec4e4007bc3af904e8fbda228c2ec132, type: 3}
-  - sprites: {fileID: 21300000, guid: 02d081beca1962f4ea5f4c5d26c2e00d, type: 3}
+  - sprites: {fileID: 21300000, guid: cf592112c04c7544da9f329f4c56abce, type: 3}
+  - sprites: {fileID: 21300000, guid: 060deb27210fb2a47a86cc68fd1b1ae4, type: 3}
   - sprites: {fileID: 21300000, guid: 0bc2451e6cfca2b449da874b9d73522e, type: 3}
-  - sprites: {fileID: 21300000, guid: bdd66bfc6000cdb4f809def026acc321, type: 3}
-  - sprites: {fileID: 21300000, guid: 7c340a000baf54d4f9d94d842b0c40bf, type: 3}
+  - sprites: {fileID: 21300000, guid: 0503a407a92e3b041b2d323663ee6db3, type: 3}
+  - sprites: {fileID: 21300000, guid: 784e4df802418ee4a8ba086fd1570b45, type: 3}
+  - sprites: {fileID: 21300000, guid: 7a489bbf1df2c534d8dfa1b095373de7, type: 3}
+  - sprites: {fileID: 21300000, guid: ba193765042dec9468f9830115d6bfef, type: 3}
+  - sprites: {fileID: 21300000, guid: cf592112c04c7544da9f329f4c56abce, type: 3}
   - sprites: {fileID: 21300000, guid: 17a3faa570375ce4999ee8c9ae965822, type: 3}
   - sprites: {fileID: 21300000, guid: bd5e56196594c914b9e16265604f5cc7, type: 3}
-  - sprites: {fileID: 21300000, guid: 4f3d8344331afc549a4c44802a3a8d47, type: 3}
-  - sprites: {fileID: 21300000, guid: 784e4df802418ee4a8ba086fd1570b45, type: 3}
-  - sprites: {fileID: 21300000, guid: b49649b3e6766c14fbc8316c61bf5bf2, type: 3}
-  - sprites: {fileID: 21300000, guid: ec4e4007bc3af904e8fbda228c2ec132, type: 3}
-  - sprites: {fileID: 21300000, guid: b49649b3e6766c14fbc8316c61bf5bf2, type: 3}
+  - sprites: {fileID: 21300000, guid: bd5e56196594c914b9e16265604f5cc7, type: 3}
   - sprites: {fileID: 21300000, guid: 7c340a000baf54d4f9d94d842b0c40bf, type: 3}
   - sprites: {fileID: 21300000, guid: 7a489bbf1df2c534d8dfa1b095373de7, type: 3}
   - sprites: {fileID: 21300000, guid: 4f3d8344331afc549a4c44802a3a8d47, type: 3}
