@@ -19,17 +19,13 @@ public class btn_OutGame : BaseButton
                 //update anh trong drawed
                 if (!GameManager.Instance.nowBtnLoadGame.isInDrawed)//ko phai trong drawed
                 {
-                    Debug.Log("1");
                     Transform find = GameManager.Instance.listDrawed.saveDrawed.Find(GameManager.Instance.nowKey);
-                    Debug.Log("2");
                     if (find != null) { find.GetComponent<Btn_loadGame1>().UpdatePicture(); Debug.Log("3"); }
 
                 }
                 if (GameManager.Instance.nowBtnLoadGame.isInDrawed)//neu ben trong toi da to thi tim ban goc de update theo
                 {
-                    Debug.Log("4");
-                    GameManager.Instance.listDrawed.DictionaryCopyOnDrawed[GameManager.Instance.nowBtnLoadGame].UpdatePicture();//tim ben ngoai draw
-                    Debug.Log("5");
+                    GameManager.Instance.listDrawed.DictionaryCopyOnDrawed[GameManager.Instance.nowBtnLoadGame].UpdatePicture();//tim ben ngoai dra
                 }
             }
         }
