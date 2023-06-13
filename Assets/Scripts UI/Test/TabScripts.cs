@@ -3,14 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TabScripts : MonoBehaviour
 {
     public CanvasGroup[] alltab;
+    public Image[] allButton;
     public TextMeshProUGUI titleText;
     public int i = 0;
 
+    public void TurnOnButton(int tab)
+    {
 
+        for (int i = 0; i < allButton.Length; i++)
+        {
+            allButton[i].color = Color.white;
+        }
+        allButton[tab - 1].color = new Color(0.85f, 0.85f, 0.85f);
+
+
+    }
     public void TurnOnTab(int tab)
     {
 

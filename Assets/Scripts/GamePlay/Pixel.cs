@@ -31,8 +31,8 @@ public class Pixel : MonoBehaviour
         if (!isFilledInTrue)
         {
             _text.text = id.ToString();
+            _text.color = new Color(0, 0, 0, 0);
             _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, 0f);
-            _text.color = Color.black;
         }
         GameManager.Instance.slider.onValueChanged.AddListener(OnSliderValueChanged);
 
@@ -46,12 +46,12 @@ public class Pixel : MonoBehaviour
         {
             if (!isFlilled)//chưa tô
             {
-                _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, Mathf.Max(0.3f, value));
+                _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, Mathf.Clamp01(value * 1.2f));
             }
             else //to roi nhung sai
                 _colorRen.color = Color.Lerp(_colorWrongMin, _colorWrongMax, value);
 
-            _text.color = new Color(0, 0, 0, Mathf.Clamp01(value));
+            _text.color = new Color(0, 0, 0, Mathf.Clamp01(value * 2));
         }
     }
     public void FillOnLoad()
@@ -86,7 +86,7 @@ public class Pixel : MonoBehaviour
         if (!Data.gameData.matrix.ContainsKey(GameManager.Instance.nowKey))
         {
             Data.AddData(GameManager.Instance.nowKey, GameManager.Instance.matrix);
-            GameManager.Instance.listDrawed.AddBtnLoad(GameManager.Instance.nowBtnLoadGame, GameManager.Instance.listDrawed.saveDrawed);//them vao listdraw btn
+            GameManager.Instance.allListDrawed.AddBtnLoad(GameManager.Instance.nowBtnLoadGame, GameManager.Instance.allListDrawed.saveDrawed);//them vao listdraw btn
         }
         isFilledInTrue = true;
         isFlilled = true;
@@ -120,14 +120,19 @@ public class Pixel : MonoBehaviour
 
             if (!GameManager.Instance.nowBtnLoadGame.isInDrawed)//ko phai trong drawed
             {
-                Transform find = GameManager.Instance.listDrawed.saveDrawed.Find(GameManager.Instance.nowKey);
+                Transform find = GameManager.Instance.allListDrawed.saveDrawed.Find(GameManager.Instance.nowKey);
                 if (find != null) { find.GetComponent<Btn_loadGame1>().UpdatePicture(); }
+
+                GameManager.Instance.allListDrawed.RemoveToCompelete(find.GetComponent<Btn_loadGame1>());
 
             }
             if (GameManager.Instance.nowBtnLoadGame.isInDrawed)//neu ben trong toi da to thi tim ban goc de update theo
             {
-                GameManager.Instance.listDrawed.DictionaryCopyOnDrawed[GameManager.Instance.nowBtnLoadGame].UpdatePicture();//tim ben ngoai dra
+                GameManager.Instance.allListDrawed.DictionaryCopyOnDrawed[GameManager.Instance.nowBtnLoadGame].UpdatePicture();//tim ben ngoai dra
+
+                GameManager.Instance.allListDrawed.RemoveToCompelete(GameManager.Instance.nowBtnLoadGame);
             }
+
             Data.Save();
         }
     }

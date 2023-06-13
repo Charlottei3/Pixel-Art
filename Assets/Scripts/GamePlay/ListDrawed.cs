@@ -6,8 +6,8 @@ using UnityEngine.Rendering;
 public class ListDrawed : MonoBehaviour
 {
     public Dictionary<Btn_loadGame1, Btn_loadGame1> DictionaryCopyOnDrawed = new Dictionary<Btn_loadGame1, Btn_loadGame1>();
-    public List<Btn_loadGame1> listDrawed;
     public List<Btn_loadGame1> listDrawing;
+    public List<Btn_loadGame1> listComplete;
     public Transform saveDrawed;
     public Transform saveDrawing;
     private void Awake()
@@ -19,11 +19,11 @@ public class ListDrawed : MonoBehaviour
     private void Start()
     {
         //add btn
-        foreach (var btn in listDrawed)
+        foreach (var btn in listDrawing)
         {
             AddBtnLoad(btn, saveDrawed);
         }
-        foreach (var btn in listDrawing)
+        foreach (var btn in listComplete)
         {
             AddBtnLoad(btn, saveDrawing);
         }
@@ -36,5 +36,12 @@ public class ListDrawed : MonoBehaviour
         copy.transform.SetParent(parent);
         DictionaryCopyOnDrawed.Add(copy, Btn_input);
     }
+    public void RemoveToCompelete(Btn_loadGame1 Btn_input)
+    {
+        Transform find = saveDrawed.Find(Btn_input.gameObject.name);
+        if (find == null) return;
+        else
+            find.SetParent(saveDrawing);
 
+    }
 }

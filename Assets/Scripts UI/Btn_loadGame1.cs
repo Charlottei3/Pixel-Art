@@ -33,21 +33,34 @@ public class Btn_loadGame1 : BaseButton
                 UpdatePicture();
                 if (!isInDrawed)
                 {
-                    GameManager.Instance.listDrawed.listDrawed.Add(this);
+                    GameManager.Instance.allListDrawed.listDrawing.Add(this);
+                    if (Data.gameData.isComplete.ContainsKey(key))
+                    {
+                        if (Data.gameData.isComplete[key])
+                        {
+                            GameManager.Instance.allListDrawed.listDrawing.Remove(this);
+                            GameManager.Instance.allListDrawed.listComplete.Add(this);
+                        }
+                    }
+
                 }
             }
         }
     }
     public void UpdatePicture()
     {
-        if (Data.gameData.isComplete.ContainsKey(key))
+        if (Data.gameData.isComplete.ContainsKey(key))//neu hoan thanh roi
         {
             if (Data.gameData.isComplete[key])
-            {
+            {//tat button bat dau tich
                 btn.enabled = false;
                 complete.SetActive(true);
                 isComplete = true;
                 Data.gameData.isComplete[GameManager.Instance.nowKey] = true;
+                if (isInDrawed)//neu o trong khu vuc toi to mau thi chuyen vao complete
+                {
+                    GameManager.Instance.allListDrawed.RemoveToCompelete(this);
+                }
             }
         }
         // picture.GetComponent<Image>().sprite = _texture

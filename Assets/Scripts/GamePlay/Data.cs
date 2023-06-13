@@ -40,16 +40,7 @@ public static class Data
         }
         else return null;
     }
-    //public static List<Btn_loadGame1> GetListDrawed()
-    //{
-    //    Load();
-    //    return gameData.list_drawed;
-    //}
-    //public static List<Btn_loadGame1> GetListDrawing()
-    //{
-    //    Load();
-    //    return gameData.list_drawing;
-    //}
+
     public static void AddData(string key, bool[,] value)
     {
 
@@ -75,28 +66,7 @@ public static class Data
         else { Debug.Log(gameData.isComplete[key]); }
         Save();
     }
-    //public static void AddDrawed(Btn_loadGame1 input)
-    //{
-    //    if (!gameData.list_drawed.Contains(input))
-    //    {
-    //        gameData.list_drawed.Add(input);
-    //    }
-    //    else
-    //    { Debug.Log("Added"); }
 
-    //    Save();
-    //}
-    //public static void AddDrawing(Btn_loadGame1 input)
-    //{
-    //    if (!gameData.list_drawing.Contains(input))
-    //    {
-    //        gameData.list_drawing.Add(input);
-    //    }
-    //    else
-    //    { Debug.Log("Added"); }
-
-    //    Save();
-    //}
 
     public static void ClickTrue(string key, int i, int j)//save data everytime click true
     {

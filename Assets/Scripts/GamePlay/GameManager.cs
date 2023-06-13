@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     public int[,] checkWin;
 
     [Header("Save")]
-    public ListDrawed listDrawed;
+    public ListDrawed allListDrawed;
     public Texture2D textureBlackandWhite;
     public string nowKey;
 
