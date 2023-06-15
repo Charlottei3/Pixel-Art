@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public Texture2D texture, nextTexture;
     public Color colorNow { get; set; }
     public int idNow { get; set; }
+    public ColorRenPixel nowColorRenPixel { get; set; }
     public bool isClick = false;
     public bool canMoveCam = true;
     public bool isFirstClick = false;
@@ -124,7 +125,7 @@ public class GameManager : MonoBehaviour
         {
             if (colors[i].a >= 0.5f)
             {
-                colors[i] = new Color(MathF.Round(colors[i].r, 1), MathF.Round(colors[i].g, 1), MathF.Round(colors[i].b, 1), 1);
+                colors[i] = new Color(RoundColor(colors[i].r, 0.2f), RoundColor(colors[i].g, 0.2f), RoundColor(colors[i].b, 0.2f));
             }
         }
 
@@ -248,14 +249,23 @@ public class GameManager : MonoBehaviour
 
     private void SetColor(ColorRenPixel colorRenPixel)
     {
+        //highlight
+
         if (isChosseFirstColor)
         {
+            Debug.Log("Setcolor");
+            nowColorRenPixel.SetSliderCanvasGroup(0);
+            nowColorRenPixel.Id_text.fontSize = 60;
             SetHighlight(false);
         }
+        //id ==1
+        nowColorRenPixel = colorRenPixel;
         this.colorNow = colorRenPixel.Color;
         this.idNow = colorRenPixel.Id;
-
+        //id ==2
         if (!isChosseFirstColor) isChosseFirstColor = true;
+        nowColorRenPixel.Id_text.fontSize = 90;
+        nowColorRenPixel.SetSliderCanvasGroup(1);
         SetHighlight(true);
     }
 
@@ -291,6 +301,15 @@ public class GameManager : MonoBehaviour
 
         }
 
+
+    }
+
+    private float RoundColor(float input, float step)
+
+    {
+        if (input % step >= step / 2)
+            return step * ((int)(input / step) + 1);
+        else return step * ((int)(input / step));
 
     }
 }

@@ -5,11 +5,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ColorRenPixel : Button
+public class ColorRenPixel : MonoBehaviour
 {
+    public CanvasGroup canvansGrpSlider;
     public Image _imageCompelete;
     public TMP_Text Id_text;
     public Slider slider;
+    public Image BackgroundSlide;
+    public Image Fill;
     public Image Background;
     public int Id;
     public bool Completed;
@@ -24,8 +27,24 @@ public class ColorRenPixel : Button
     {
         return this.GetComponent<Button>();
     }
+    public void SetSliderCanvasGroup(float a)
+    {
+        this.canvansGrpSlider.alpha = a;
+    }
     public void SetData(int id, Color color)
     {
+        if (color.grayscale <= 0.5f)//color la black
+        {
+            this.BackgroundSlide.color = Color.white;
+            Id_text.color = Color.white;
+
+        }
+        else
+        {
+            this.BackgroundSlide.color = Color.black;
+            Id_text.color = Color.black;
+        }
+        this.Fill.color = color;
         Id = id;
         Id_text.text = id.ToString();
         Background.color = color;
