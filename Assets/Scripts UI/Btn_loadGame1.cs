@@ -33,14 +33,16 @@ public class Btn_loadGame1 : BaseButton
                 UpdatePicture();
                 if (!isInDrawed)
                 {
-                    GameManager.Instance.allListDrawed.listDrawing.Add(this);
+
                     if (Data.gameData.isComplete.ContainsKey(key))
                     {
                         if (Data.gameData.isComplete[key])
                         {
-                            GameManager.Instance.allListDrawed.listDrawing.Remove(this);
-                            GameManager.Instance.allListDrawed.listComplete.Add(this);
+
+                            GameManager.Instance.allListDrawed.AddBtnLoad(this, GameManager.Instance.allListDrawed.saveComplete);
                         }
+                        else
+                            GameManager.Instance.allListDrawed.AddBtnLoad(this, GameManager.Instance.allListDrawed.saveDrawing);
                     }
 
                 }

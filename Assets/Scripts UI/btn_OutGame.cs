@@ -20,7 +20,7 @@ public class btn_OutGame : BaseButton
                 //update anh trong drawed
                 if (!GameManager.Instance.nowBtnLoadGame.isInDrawed)//ko phai trong drawed
                 {
-                    Transform find = GameManager.Instance.allListDrawed.saveDrawed.Find(GameManager.Instance.nowKey);
+                    Transform find = GameManager.Instance.allListDrawed.saveDrawing.Find(GameManager.Instance.nowKey);
                     if (find != null) { find.GetComponent<Btn_loadGame1>().UpdatePicture(); Debug.Log("3"); }
 
                 }

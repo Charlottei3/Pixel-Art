@@ -37,9 +37,7 @@ public class Pixel : MonoBehaviour
         GameManager.Instance.slider.onValueChanged.AddListener(OnSliderValueChanged);
 
     }
-    private void Update()
-    {
-    }
+
     private void OnSliderValueChanged(float value)
     {
         if (!isFilledInTrue)//tô sai
@@ -87,7 +85,7 @@ public class Pixel : MonoBehaviour
         if (!Data.gameData.matrix.ContainsKey(GameManager.Instance.nowKey))
         {
             Data.AddData(GameManager.Instance.nowKey, GameManager.Instance.matrix);
-            GameManager.Instance.allListDrawed.AddBtnLoad(GameManager.Instance.nowBtnLoadGame, GameManager.Instance.allListDrawed.saveDrawed);//them vao listdraw btn
+            GameManager.Instance.allListDrawed.AddBtnLoad(GameManager.Instance.nowBtnLoadGame, GameManager.Instance.allListDrawed.saveDrawing);//them vao listdraw btn
         }
         isFilledInTrue = true;
         isFlilled = true;
@@ -122,7 +120,7 @@ public class Pixel : MonoBehaviour
 
             if (!GameManager.Instance.nowBtnLoadGame.isInDrawed)//ko phai trong drawed
             {
-                Transform find = GameManager.Instance.allListDrawed.saveDrawed.Find(GameManager.Instance.nowKey);
+                Transform find = GameManager.Instance.allListDrawed.saveDrawing.Find(GameManager.Instance.nowKey);
                 if (find != null) { find.GetComponent<Btn_loadGame1>().UpdatePicture(); }
 
                 GameManager.Instance.allListDrawed.RemoveToCompelete(find.GetComponent<Btn_loadGame1>());
