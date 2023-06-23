@@ -24,7 +24,7 @@ public class Btn_loadGame1 : BaseButton
     {
         base.Start();
         _texture = picture.GetComponent<Image>().sprite.texture;
-        key = _texture.name;
+        key = picture.GetComponent<Image>().sprite.name;
         //neu co san anh den trang thi chi update khi ma  Data.gameData.isdrawed[key] = true;
         if (Data.gameData.isdrawed.ContainsKey(key))
         {

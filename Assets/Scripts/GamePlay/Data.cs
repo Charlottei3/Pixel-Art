@@ -66,7 +66,11 @@ public static class Data
         else { Debug.Log(gameData.isComplete[key]); }
         Save();
     }
-
+    public static void IncreaseNumberWebCamPicture()
+    {
+        gameData.WebCamPictureCount++;
+        Save();
+    }
 
     public static void ClickTrue(string key, int i, int j)//save data everytime click true
     {
@@ -89,6 +93,7 @@ public class PlayerData
     public Dictionary<string, bool[,]> matrix = new Dictionary<string, bool[,]>();
     public Dictionary<string, bool> isdrawed = new Dictionary<string, bool>();
     public Dictionary<string, bool> isComplete = new Dictionary<string, bool>();
+    public int WebCamPictureCount = 0;
 
 
 

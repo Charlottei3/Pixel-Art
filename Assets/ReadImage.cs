@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ReadImage : MonoBehaviour
 {
-    string imageFileName = "savedImage1";
+    string imageFileName = "Create0";
     Texture2D imageTexture;
     Image Image;
     private void Awake()
@@ -16,7 +16,7 @@ public class ReadImage : MonoBehaviour
     private void Start()
     {
         // Load ảnh từ đường dẫn và tạo texture
-        byte[] imageBytes = File.ReadAllBytes(Application.dataPath + "/CamPicture/" + imageFileName);
+        byte[] imageBytes = File.ReadAllBytes(Application.dataPath + "/StreamingAssets/CamPicture/" + imageFileName + ".png");
         imageTexture = new Texture2D(2, 2);
         imageTexture.LoadImage(imageBytes);
         imageTexture.Apply();

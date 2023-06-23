@@ -72,9 +72,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 85acb43ca79adf440952955b6be809f9, type: 3}
-  m_Color: {r: 0.5566038, g: 0.3014062, b: 0.3014062, a: 0.53333336}
+  m_Color: {r: 0.7830189, g: 0.4757209, b: 0.4757209, a: 0.53333336}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -133,10 +133,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee9207ebb58f4d4ea9db2a4f34cb4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  x: 0
+  y: 0
   _colorRen: {fileID: 2495059292568899415}
   _lineRen: {fileID: 2756800854752947893}
   _highlight: {fileID: 275245147995453646}
   _text: {fileID: 1966851510748308578}
+  isFlilled: 0
+  isFilledInTrue: 0
 --- !u!61 &-3374841822277481929
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -263,7 +267,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -290,7 +294,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 4.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -407,7 +411,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 85acb43ca79adf440952955b6be809f9, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
