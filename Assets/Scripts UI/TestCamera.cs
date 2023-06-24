@@ -12,6 +12,7 @@ public class TestCamera : BaseButton
     Sprite sprite;
     Sprite blacksprite;
     public Transform gridCreate;
+    public Sprite Apple;
     protected override void OnClick()
     {
         sprite = getCam.TakePicture();//chup
@@ -22,8 +23,8 @@ public class TestCamera : BaseButton
         PictureControll.Instance_picture.CreateBtnLoad(sprite, blacksprite, gridCreate);
 
 
-        getCam.SaveImageToFile(sprite.texture, "Create" + $"{Data.gameData.WebCamPictureCount}", "/CamPicture/");//luu anh thuong vao folder
-        getCam.SaveImageToFile(blacksprite.texture, "CreateBlack" + $"{Data.gameData.WebCamPictureCount}", "/CamPictureBlack/");//luu anh den trang
+        getCam.SaveImageToFile(sprite.texture, "Create" + $"{Data.gameData.WebCamPictureCount}", "/CamPicture");//luu anh thuong vao folder
+        getCam.SaveImageToFile(blacksprite.texture, "CreateBlack" + $"{Data.gameData.WebCamPictureCount}", "/CamPictureBlack");//luu anh den trang
 
 
         //tang data count

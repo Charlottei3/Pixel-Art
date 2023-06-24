@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 //using System.Drawing;
 using System.IO;
+using System.Security;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Android;
@@ -23,11 +24,12 @@ public class GetCameraImage : MonoBehaviour
     private Material grayScaleMaterial;
     private Texture2D texture;
     public Shader shader;
+    bool CamOn = false;
     //Assets/Material2/GrayScale2.shader
     private void Start()
     {
         slider.onValueChanged.AddListener(OnSliderValueChanged);
-
+        // webcamTexture.Stop();
 
     }
 
@@ -37,36 +39,18 @@ public class GetCameraImage : MonoBehaviour
         grayScaleMaterial.SetFloat("_GridWidth", (int)size);
         grayScaleMaterial.SetFloat("_GridHeight", (int)size);
     }
-    public void TurnOnCam()
-    {
-        if (!Permission.HasUserAuthorizedPermission(Permission.Camera) || !Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite) || Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
-        {
 
-            string[] request = new string[3] { Permission.Camera, Permission.ExternalStorageWrite, Permission.ExternalStorageWrite };
-            Permission.RequestUserPermissions(request);
-        }
-        //if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))
-        //{
-        //    Permission.RequestUserPermission(Permission.ExternalStorageWrite);
-        //}
-
-        grayScaleMaterial = new Material(shader);
-
-        //  WebCamDevice[] devices = WebCamTexture.devices;
-
-        //Debug.Log("SoluongCamtimThay" + $"{devices.Length}");
-
-
-        webcamTexture = new WebCamTexture(480, 480, 30);
-        grayScaleMaterial.mainTexture = webcamTexture;
-        webcamTexture.Play();
-        webcamTexture.filterMode = FilterMode.Trilinear;
-
-    }
     private void Update()
     {
-        grayScaleMaterial.SetTexture("_MainTex", webcamTexture);
-        this.GetComponent<Image>().material = grayScaleMaterial;
+
+        if (CamOn)
+        {
+            Texture test = webcamTexture;
+
+
+            grayScaleMaterial.SetTexture("_MainTex", webcamTexture);
+            this.GetComponent<Image>().material = grayScaleMaterial;
+        }
     }
 
     private Texture2D ChangeToTexture2D(Texture input)
@@ -88,18 +72,21 @@ public class GetCameraImage : MonoBehaviour
     {
 
         byte[] bytes = textureToSave.EncodeToPNG();
-        string filename = name + ".png";
-        File.WriteAllBytes(Application.streamingAssetsPath + folder + filename, bytes);
+        string filename = name;
+        Debug.LogError("persistenppath" + Application.persistentDataPath);
+        string destination = Application.persistentDataPath + "/" + name + ".png";
+        File.WriteAllBytes(destination, bytes);
     }
     public Sprite ReadFileToSprite(string imageFileName, string foldername)
     {
         Texture2D imageTexture;
-        byte[] imageBytes = File.ReadAllBytes(Application.streamingAssetsPath + foldername + imageFileName + ".png");
+        byte[] imageBytes = File.ReadAllBytes(Application.persistentDataPath + "/" + imageFileName + ".png");
         imageTexture = new Texture2D(2, 2);
         imageTexture.LoadImage(imageBytes);
         imageTexture.Apply();
 
         Sprite sprite = Sprite.Create(imageTexture, new Rect(0, 0, imageTexture.width, imageTexture.height), new Vector2(0.5f, 0.5f));
+        sprite.name = imageFileName;
         return sprite;
     }
     public Sprite TakePicture()
@@ -107,20 +94,105 @@ public class GetCameraImage : MonoBehaviour
         Texture2D texture = new Texture2D(webcamTexture.width, webcamTexture.height, TextureFormat.RGBA32, false);
 
         Texture2D test = ChangeToTexture2D(grayScaleMaterial.mainTexture);
+
+
         texture.SetPixels(test.GetPixels());
         texture.Apply();
         TextureScale.Bilinear(texture, (int)size, (int)size);
         texture.Apply();
+        texture = TextureScale.rotate90(texture);
         Sprite create = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);
+
         create.name = "Create" + $"{Data.gameData.WebCamPictureCount}";
         return create;
     }
-
-
-
-    public void TurnOffCam()
+    private IEnumerator AskForPermissions()
+    {
+#if UNITY_ANDROID
+        List<bool> permissions = new List<bool>() { false, false, false };
+        List<bool> permissionsAsked = new List<bool>() { false, false, false };
+        List<Action> actions = new List<Action>()
+    {
+        new Action(() => {
+            permissions[0] = Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead);
+            if (!permissions[0] && !permissionsAsked[0])
+            {
+                Permission.RequestUserPermission(Permission.ExternalStorageRead);
+                permissionsAsked[0] = true;
+                //return;
+            }
+        }),
+        new Action(() => {
+            permissions[1] = Permission.HasUserAuthorizedPermission(Permission.Camera);
+            if (!permissions[1] && !permissionsAsked[1])
+            {
+                Permission.RequestUserPermission(Permission.Camera);
+                permissionsAsked[1] = true;
+               // return;
+            }
+        }),
+        new Action(() => {
+            permissions[2] = Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite);
+            if (!permissions[2] && !permissionsAsked[2])
+            {
+                Permission.RequestUserPermission(Permission.ExternalStorageWrite);
+                permissionsAsked[2] = true;
+              //  return;
+            }
+        }),
+        //    new Action(() => {
+        //    permissions[3] = Permission.HasUserAuthorizedPermission("android.permission.READ_PHONE_STATE");
+        //    if (!permissions[3] && !permissionsAsked[3])
+        //    {
+        //        Permission.RequestUserPermission("android.permission.READ_PHONE_STATE");
+        //        permissionsAsked[3] = true;
+        //        return;
+        //    }
+        //})
+    };
+        for (int i = 0; i < permissionsAsked.Count;)
+        {
+            actions[i].Invoke();
+            if (permissions[i])
+            {
+                Debug.Log("Reqquest" + $"{i}");
+                ++i;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+#endif
+    }
+    public void Reqquest()
+    {
+        StartCoroutine(AskForPermissions());
+        Debug.Log("Request");
+    }
+    public void TurnOnCam()
     {
 
+        CamOn = true;
+        //if (!Permission.HasUserAuthorizedPermission(Permission.Camera) || !Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite) || Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
+        //{
+
+        //    string[] request = new string[3] { Permission.Camera, Permission.ExternalStorageWrite, Permission.ExternalStorageRead };
+        //    Permission.RequestUserPermissions(request);
+        //}
+
+        grayScaleMaterial = new Material(shader);
+
+
+        webcamTexture = new WebCamTexture(480, 480, 30);
+        // grayScaleMaterial.mainTexture = webcamTexture;
+        //webcamTexture.videoRotationAngle = 0;
+        webcamTexture.Play();
+        webcamTexture.filterMode = FilterMode.Trilinear;
+
+        Debug.Log(webcamTexture.videoRotationAngle);
+
+    }
+    public void TurnOffCam()
+    {
+        CamOn = false;
         webcamTexture.Pause();
         webcamTexture.Stop();
     }
@@ -128,6 +200,59 @@ public class GetCameraImage : MonoBehaviour
 }
 public class TextureScale : MonoBehaviour
 {
+    public static Texture2D rotate90(Texture2D orig)
+    {
+        print("doing rotate90");
+        Color32[] origpix = orig.GetPixels32(0);
+        Color32[] newpix = new Color32[orig.width * orig.height];
+        for (int c = 0; c < orig.height; c++)
+        {
+            for (int r = 0; r < orig.width; r++)
+            {
+                newpix[orig.width * orig.height - (orig.height * r + orig.height) + c] =
+                  origpix[orig.width * orig.height - (orig.width * c + orig.width) + r];
+            }
+        }
+        Texture2D newtex = new Texture2D(orig.height, orig.width, orig.format, false);
+        newtex.SetPixels32(newpix, 0);
+        newtex.Apply();
+        return newtex;
+    }
+
+    private static Texture2D rotate180(Texture2D orig)
+    {
+        print("doing rotate180");
+        Color32[] origpix = orig.GetPixels32(0);
+        Color32[] newpix = new Color32[orig.width * orig.height];
+        for (int i = 0; i < origpix.Length; i++)
+        {
+            newpix[origpix.Length - i - 1] = origpix[i];
+        }
+        Texture2D newtex = new Texture2D(orig.width, orig.height, orig.format, false);
+        newtex.SetPixels32(newpix, 0);
+        newtex.Apply();
+        return newtex;
+    }
+
+    private static Texture2D rotate270(Texture2D orig)
+    {
+        print("doing rotate270");
+        Color32[] origpix = orig.GetPixels32(0);
+        Color32[] newpix = new Color32[orig.width * orig.height];
+        int i = 0;
+        for (int c = 0; c < orig.height; c++)
+        {
+            for (int r = 0; r < orig.width; r++)
+            {
+                newpix[orig.width * orig.height - (orig.height * r + orig.height) + c] = origpix[i];
+                i++;
+            }
+        }
+        Texture2D newtex = new Texture2D(orig.height, orig.width, orig.format, false);
+        newtex.SetPixels32(newpix, 0);
+        newtex.Apply();
+        return newtex;
+    }
     public static void Bilinear(Texture2D source, int targetWidth, int targetHeight)
     {
         Color[] pixels = new Color[targetWidth * targetHeight];

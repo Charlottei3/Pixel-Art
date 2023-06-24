@@ -104,8 +104,8 @@ public class PictureControll : MonoBehaviour
     {
         for (int i = 0; i < Data.gameData.WebCamPictureCount; i++)
         {
-            Sprite a = getCameraImage.ReadFileToSprite("Create" + $"{i}", "/CamPicture/");
-            Sprite a_black = getCameraImage.ReadFileToSprite("CreateBlack" + $"{i}", "/CamPictureBlack/");
+            Sprite a = getCameraImage.ReadFileToSprite("Create" + $"{i}", "/CamPicture");
+            Sprite a_black = getCameraImage.ReadFileToSprite("CreateBlack" + $"{i}", "/CamPictureBlack");
             CreateBtnLoad(a, a_black, gridCreate);
         }
     }

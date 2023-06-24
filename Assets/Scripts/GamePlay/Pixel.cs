@@ -44,13 +44,14 @@ public class Pixel : MonoBehaviour
         {
             if (!isFlilled)//chưa tô
             {
-                _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, Mathf.Clamp01(value * 1.2f));
+                _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, Mathf.Clamp01(value * 1.2f));//SETMAU khi zoom
             }
             else //to roi nhung sai
                 _colorRen.color = Color.Lerp(_colorWrongMin, _colorWrongMax, value);
 
-            _text.color = new Color(0, 0, 0, Mathf.Clamp01(value * 2));
+            _text.color = new Color(0, 0, 0, Mathf.Clamp01(value * 2));//SET TEXT MO
         }
+        //HUONG DI MOI
     }
     public void FillOnLoad()
     {
