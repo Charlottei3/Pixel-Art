@@ -73,6 +73,7 @@ public class GetCameraImage : MonoBehaviour
 
     private IEnumerator AskForPermissions()
     {
+
 #if UNITY_ANDROID
         List<bool> permissions = new List<bool>() { false, false, false };
         List<bool> permissionsAsked = new List<bool>() { false, false, false };
@@ -125,12 +126,13 @@ public class GetCameraImage : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
         }
-        //TurnOnCam(0);
+        TurnOnCam(0);
 #endif
 
     }
     public void Reqquest()
     {
+        if (Application.platform != RuntimePlatform.Android) return;
         StartCoroutine(AskForPermissions());
     }
     public void TurnOnCam(int input)
