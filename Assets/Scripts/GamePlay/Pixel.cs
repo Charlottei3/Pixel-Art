@@ -16,8 +16,9 @@ public class Pixel : MonoBehaviour
     public Color _colorTrue { get; set; }
     public Color _colorWrongMax { get; set; }
     public Color _colorWrongMin { get; set; }
-
-
+    // public SpriteRenderer _spriteRendererColor;
+    public Material spriteDefaults;
+    public Material wrongColor;
     [SerializeField] SpriteRenderer _colorRen;
     [SerializeField] SpriteRenderer _lineRen;
     [SerializeField] public SpriteRenderer _highlight;
@@ -31,10 +32,11 @@ public class Pixel : MonoBehaviour
         if (!isFilledInTrue)
         {
             _text.text = id.ToString();
-            _text.color = new Color(0, 0, 0, 0);
-            _colorRen.color = Color.Lerp(Color.white * _colorTrue.grayscale * 2, Color.white, 0f);
+            //_text.color = new Color(0, 0, 0, 0);
+            _colorRen.color = Color.white * _colorTrue.grayscale * 2;
+            _colorRen.color = new Color(_colorRen.color.r, _colorRen.color.g, _colorRen.color.b, 1);
         }
-        GameManager.Instance.slider.onValueChanged.AddListener(OnSliderValueChanged);
+        //GameManager.Instance.slider.onValueChanged.AddListener(OnSliderValueChanged);
 
     }
 
@@ -49,7 +51,7 @@ public class Pixel : MonoBehaviour
             else //to roi nhung sai
                 _colorRen.color = Color.Lerp(_colorWrongMin, _colorWrongMax, value);
 
-            _text.color = new Color(0, 0, 0, Mathf.Clamp01(value * 2));//SET TEXT MO
+            // _text.color = new Color(0, 0, 0, Mathf.Clamp01(value * 2));//SET TEXT MO
         }
         //HUONG DI MOI
     }
@@ -59,6 +61,7 @@ public class Pixel : MonoBehaviour
         isFilledInTrue = true;
         isFlilled = true;
         _colorRen.color = _colorTrue;
+        _colorRen.material = spriteDefaults;
         _lineRen.color = _colorTrue;
 
         _text.text = "";
@@ -91,10 +94,12 @@ public class Pixel : MonoBehaviour
         isFilledInTrue = true;
         isFlilled = true;
         _colorRen.color = _colorTrue;
+        _colorRen.material = spriteDefaults;
         _lineRen.color = _colorTrue;
 
         _text.text = "";
         _highlight.enabled = false;
+
         Data.ClickTrue(GameManager.Instance.nowKey, x, y);
         //Update thanh slide
         GameManager.Instance.allButon[GameManager.Instance.idNow - 1].slider.value = UpdateSlide(GameManager.Instance.idNow);
@@ -185,13 +190,16 @@ public class Pixel : MonoBehaviour
     {
         if (!isFilledInTrue)
         {
-            isFlilled = true;
-            Color _color = Color.Lerp(GameManager.Instance.colorNow, _colorTrue, 0.35f);
-            _colorWrongMax = Color.Lerp(_color, Color.white, 0.7f);
-            _colorWrongMin = Color.Lerp(_color, Color.white, 0.4f);
-            Color _colorWrongNow = Color.Lerp(_colorWrongMin, _colorWrongMax, GameManager.Instance.slider.value);
 
-            _colorRen.color = _colorWrongNow;
+            isFlilled = true;
+            Color _color = Color.Lerp(GameManager.Instance.colorNow, _colorTrue, 0.5f);
+            _colorRen.material = wrongColor;
+            _colorRen.color = _color;
+            //  _colorWrongMax = Color.Lerp(_color, Color.white, 0.7f);
+            // _colorWrongMin = Color.Lerp(_color, Color.white, 0.4f);
+            //    Color _colorWrongNow = Color.Lerp(_colorWrongMin, _colorWrongMax, GameManager.Instance.slider.value);
+            //Color _colorWrongNow = Color.Lerp(_colorWrongMin, _colorWrongMax, GameManager.Instance.slider.value);
+            //_colorRen.color = _colorWrongNow;
         }
     }
     private void OnMouseDown()

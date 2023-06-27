@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
+        //_slider.value = 0;
         isClick = false;
         canMoveCam = true;
         isFirstClick = false;
@@ -119,6 +120,7 @@ public class GameManager : MonoBehaviour
 
     public void CreatePixelMap()
     {
+        slider.value = 0;
         Color[] colors = texture.GetPixels();
 
         for (int i = 0; i < colors.Length; i++)
@@ -208,8 +210,8 @@ public class GameManager : MonoBehaviour
     IEnumerator TurnOnDamping()
     {
         yield return new WaitForEndOfFrame();
-        transposer.m_XDamping = 0.75f;
-        transposer.m_YDamping = 0.75f;
+        transposer.m_XDamping = 0.1f;
+        transposer.m_YDamping = 0.1f;
     }
     void CreateColorSwatches()
     {

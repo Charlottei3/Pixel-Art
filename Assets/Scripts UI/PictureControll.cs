@@ -31,7 +31,7 @@ public class PictureControll : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         Data.Load();
-        Application.targetFrameRate = 100;
+        Application.targetFrameRate = 60;
     }
     private void Start()
     {

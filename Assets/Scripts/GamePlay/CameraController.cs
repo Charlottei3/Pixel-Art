@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
+    public Material WrongColor;
+    public Material SquareColor;
+    public Material Text;
     [SerializeField] private Camera cam;
     [SerializeField] private CinemachineVirtualCamera virturalcam;
     [SerializeField] private Transform camlookat;
@@ -18,9 +21,8 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        //targetZoom = cam.orthographicSize;
         _slider.onValueChanged.AddListener(OnSliderValueChanged);
-        //  frameLimitCam = transform.position;
+        _slider.value = 0;
     }
 
     void Update()
@@ -62,8 +64,12 @@ public class CameraController : MonoBehaviour
 
     private void OnSliderValueChanged(float value)
     {
+        //PixelColor.
         virturalcam.m_Lens.OrthographicSize = Mathf.Lerp(GameManager.Instance.camMaxsize, 8, value);
         camlookat.transform.position = ClampCamera(cam.transform.position);
+        SquareColor.SetColor("_FaceColor", new Color(1, 1, 1, 1 - value));
+        Text.SetColor("_FaceColor", new Color(1, 1, 1, (value)));
+        WrongColor.SetColor("_FaceColor", new Color(1, 1, 1, Mathf.Clamp(1 - value, 0.5f, 1f)));
     }
     private Vector3 ClampCamera(Vector3 targerPosition)
     {

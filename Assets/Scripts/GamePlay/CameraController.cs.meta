@@ -3,7 +3,13 @@ guid: be2b09ec71a2222418b89ceea7e86a48
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - SquareColor: {fileID: 2100000, guid: 141fa42b233099a42a51e4f929d12bfa, type: 2}
+  - Text: {fileID: 2100000, guid: 19ea966208d45b84d8a56b2f6ba40c5d, type: 2}
+  - cam: {instanceID: 0}
+  - virturalcam: {instanceID: 0}
+  - camlookat: {instanceID: 0}
+  - _slider: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
