@@ -10,12 +10,12 @@ public class PageSwipe : MonoBehaviour, IDragHandler, IEndDragHandler
     private Vector3 panelLocation;
     public float percentThreshold = 1;
     public float speed01 = 0.8f;
-    public int totalPages = 2;
-    private int currentPage = 1;
+    public int totalPages = 1;
+    public int currentPage = 2;
     private void Start()
     {
         panelLocation = transform.position;
-        currentPage = 1;
+        currentPage = 2;
     }
     public void OnDrag(PointerEventData data)
     {

@@ -12,6 +12,7 @@ public class Pixel : MonoBehaviour
     public int x;
     public int y;
     private bool isClick = false;
+    public bool isCheckDrawStick = false;
     public int id { get; set; }
     public Color _colorTrue { get; set; }
     public Color _colorWrongMax { get; set; }
@@ -75,11 +76,11 @@ public class Pixel : MonoBehaviour
         }
         if (CheckCompleteAllColor())
         {
-            GameManager.Instance.Menu.SetActive(true);
-            GameManager.Instance.AllBook.SetActive(true);
+            //GameManager.Instance.Menu.SetActive(true);
+            //GameManager.Instance.AllBook.SetActive(true);
             GameManager.Instance.Clear();
 
-            GameManager.Instance.btnOutGame.gameObject.SetActive(false);
+            //GameManager.Instance.btnOutGame.gameObject.SetActive(false);
             GameManager.Instance.nowBtnLoadGame.UpdatePicture();
             /*GameManager.Instance.LoadPicture();*/
         }
@@ -102,21 +103,21 @@ public class Pixel : MonoBehaviour
 
         Data.ClickTrue(GameManager.Instance.nowKey, x, y);
         //Update thanh slide
-        GameManager.Instance.allButon[GameManager.Instance.idNow - 1].slider.value = UpdateSlide(GameManager.Instance.idNow);
+        GameManager.Instance.allButon[this.id - 1].slider.value = UpdateSlide(this.id);
         //hoàn thành xong màu chưa
-        if (CheckCompleteColorNow(GameManager.Instance.idNow))
+        if (CheckCompleteColorNow(this.id))
         {
-            GameManager.Instance.allButon[GameManager.Instance.idNow - 1]._imageCompelete.enabled = true;
+            GameManager.Instance.allButon[this.id - 1]._imageCompelete.enabled = true;
         }
         if (CheckCompleteAllColor())
         {
-            GameManager.Instance.Menu.SetActive(true);
-            GameManager.Instance.AllBook.SetActive(true);
-            GameManager.Instance.Clear();
+            //GameManager.Instance.Menu.SetActive(true);
+            //GameManager.Instance.AllBook.SetActive(true);
 
-            GameManager.Instance.btnOutGame.gameObject.SetActive(false);
-            GameManager.Instance.nowBtnLoadGame.UpdatePicture();
+            //GameManager.Instance.btnOutGame.gameObject.SetActive(false);
             /*GameManager.Instance.LoadPicture();*/
+            GameManager.Instance.Clear();
+            GameManager.Instance.nowBtnLoadGame.UpdatePicture();
 
             GameManager.Instance.nowBtnLoadGame.btn.enabled = false;
             GameManager.Instance.nowBtnLoadGame.complete.SetActive(true);
@@ -202,13 +203,27 @@ public class Pixel : MonoBehaviour
             //_colorRen.color = _colorWrongNow;
         }
     }
+
     private void OnMouseDown()
     {
         if (GameManager.Instance.isChosseFirstColor)
         {
             GameManager.Instance.isFirstClick = CheckColor();
             GameManager.Instance.isClick = true;
-            if (GameManager.Instance.isFirstClick) Fill();
+            if (GameManager.Instance.isFirstClick) { Fill(); }
+            ////Test
+            if (GameManager.Instance.status == StatusGame.STATUS.BOMB && !this.isFilledInTrue)
+            {
+                GameManager.Instance.isFirstClick = true;
+                GameManager.Instance.isClick = true;
+                ActionDraw.FillBoomb(this);
+            }
+            if (GameManager.Instance.status == StatusGame.STATUS.STICK && !this.isFilledInTrue)
+            {
+                GameManager.Instance.isFirstClick = true;
+                GameManager.Instance.isClick = true;
+                ActionDraw.DrawAround(this);
+            }
         }
     }
     private void OnMouseUp()
@@ -218,7 +233,17 @@ public class Pixel : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && CheckColor()) Fill();
-        else if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && !CheckColor()) FillWrong();
+
+        if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && CheckColor() && GameManager.Instance.status == StatusGame.STATUS.NORMAL) Fill();
+        else if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && !CheckColor() && GameManager.Instance.status == StatusGame.STATUS.NORMAL) FillWrong();
+        //Test
+        if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && GameManager.Instance.status == StatusGame.STATUS.BOMB)
+        {
+            ActionDraw.FillBoomb(this);
+        }
+        if (GameManager.Instance.isClick && GameManager.Instance.isFirstClick && GameManager.Instance.status == StatusGame.STATUS.STICK)
+        {
+            ActionDraw.DrawAround(this);
+        }
     }
 }

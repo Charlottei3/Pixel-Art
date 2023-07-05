@@ -31,6 +31,7 @@ public class PictureControll : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         Data.Load();
+
         Application.targetFrameRate = 60;
     }
     private void Start()
@@ -106,6 +107,7 @@ public class PictureControll : MonoBehaviour
         {
             Sprite a = getCameraImage.ReadFileToSprite("Create" + $"{i}", "/CamPicture");
             Sprite a_black = getCameraImage.ReadFileToSprite("CreateBlack" + $"{i}", "/CamPictureBlack");
+            // Debug.Log()
             CreateBtnLoad(a, a_black, gridCreate);
         }
     }

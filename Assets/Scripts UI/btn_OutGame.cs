@@ -6,12 +6,13 @@ public class btn_OutGame : BaseButton
 {
     protected override void OnClick()
     {
-        Debug.Log("out");
-        GameManager.Instance.Menu.SetActive(true);
-        GameManager.Instance.AllBook.SetActive(true);
+
+        //GameManager.Instance.Menu.SetActive(true);
+        //GameManager.Instance.AllBook.SetActive(true);
+        //GameManager.Instance.btnOutGame.gameObject.SetActive(false);
         GameManager.Instance.Clear();
 
-        GameManager.Instance.btnOutGame.gameObject.SetActive(false);
+
         if (Data.gameData.isdrawed.ContainsKey(GameManager.Instance.nowKey))
         {
             if (Data.gameData.isdrawed[GameManager.Instance.nowKey] == true)

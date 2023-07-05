@@ -215,6 +215,7 @@ public class GetCameraImage : MonoBehaviour
     {
         Texture2D imageTexture;
         byte[] imageBytes = File.ReadAllBytes(Application.persistentDataPath + "/" + imageFileName + ".png");
+        Debug.LogError("Read:" + Application.persistentDataPath + "/" + imageFileName + ".png");
         imageTexture = new Texture2D(2, 2);
         imageTexture.LoadImage(imageBytes);
         imageTexture.Apply();

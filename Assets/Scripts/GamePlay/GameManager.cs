@@ -23,11 +23,12 @@ public class GameManager : MonoBehaviour
     public bool isChosseFirstColor = false;
     public float camMaxsize;
     public PageSwipe pageSwipe;
+    public GameObject HelpDraw;
     public Transform _trs, _colorButonParen, pageParent;
     [SerializeField] Pixel objPrefab;
     [SerializeField] GameObject pagePrefabs;
     [SerializeField] ColorRenPixel colorPrefabs;
-    [SerializeField] private Pixel[,] Pixels;
+    [SerializeField] public Pixel[,] Pixels;
     [SerializeField] public Slider slider;
     [SerializeField] List<Pixel> _list;
     [SerializeField] private int _countColor = 1;
@@ -56,6 +57,10 @@ public class GameManager : MonoBehaviour
     public bool[,] matrix;
     public Dictionary<string, bool[,]> allSaves = new Dictionary<string, bool[,]>();
     public Btn_loadGame1 nowBtnLoadGame;
+    public StatusGame.STATUS status;
+    public GameObject Line;
+    GameObject help;
+    List<Pixel> listDrawStick = new List<Pixel>();
     void Awake()
     {
 
@@ -81,16 +86,21 @@ public class GameManager : MonoBehaviour
     public void NewGame()
     {
         //_slider.value = 0;
+        //Pixels
         isClick = false;
+        pageSwipe.currentPage = 2;
         canMoveCam = true;
         isFirstClick = false;
+
         isChosseFirstColor = false;
         _countColor = 1;
         texture = PictureControll.Instance_picture.nowTexure;
+        pageParent.gameObject.SetActive(true);
+        Line.SetActive(true);
         CreatePixelMap();
 
         CreateColorSwatches();
-
+        SetColor(ColorSwatches[0]);
         canMoveCam = true;
         checkWin = new int[_countColor - 1, 2];
         LoadFilled();
@@ -216,6 +226,8 @@ public class GameManager : MonoBehaviour
     void CreateColorSwatches()
     {
         _colorButonParen.transform.position = Vector3.zero + new Vector3(0, Screen.width / 2.5f, 0);
+        help = Instantiate(HelpDraw, pageParent);
+        help.transform.position = _colorButonParen.transform.position + new Vector3(0, -Screen.width / 2.5f, 0);
 
         allButon = new ColorRenPixel[_allTypeOfColor.Count];
         foreach (KeyValuePair<Color, int> kvp in _allTypeOfColor)
@@ -247,6 +259,7 @@ public class GameManager : MonoBehaviour
 
         }
         // colorNow = ColorSwatches[0].Color;
+        pageSwipe.totalPages += 1;
     }
 
     private void SetColor(ColorRenPixel colorRenPixel)
@@ -256,7 +269,7 @@ public class GameManager : MonoBehaviour
         if (isChosseFirstColor)
         {
             Debug.Log("Setcolor");
-            nowColorRenPixel.SetSliderCanvasGroup(0);
+            nowColorRenPixel.SetSliderCanvasGroup(0);//tat nut mau cu di
             nowColorRenPixel.Id_text.fontSize = 60;
             SetHighlight(false);
         }
@@ -264,6 +277,8 @@ public class GameManager : MonoBehaviour
         nowColorRenPixel = colorRenPixel;
         this.colorNow = colorRenPixel.Color;
         this.idNow = colorRenPixel.Id;
+        help.GetComponent<HelpDraw>().TurnOffAllHighlight();
+        SetStatus(StatusGame.STATUS.NORMAL);
         //id ==2
         if (!isChosseFirstColor) isChosseFirstColor = true;
         nowColorRenPixel.Id_text.fontSize = 90;
@@ -291,7 +306,11 @@ public class GameManager : MonoBehaviour
     }
     public void Clear()
     {
-
+        Menu.SetActive(true);
+        AllBook.SetActive(true);
+        btnOutGame.gameObject.SetActive(false);
+        pageParent.gameObject.SetActive(false);
+        Line.SetActive(false);
         for (int i = 0; i < _trs.transform.childCount; i++)
         {
             Destroy(_trs.transform.GetChild(i).gameObject);
@@ -314,4 +333,19 @@ public class GameManager : MonoBehaviour
         else return step * ((int)(input / step));
 
     }
+    public void SetStatus(StatusGame.STATUS stastus)
+    {
+        status = stastus;
+    }
+}
+public class StatusGame
+{
+    public STATUS status = STATUS.NORMAL;
+    public enum STATUS
+    {
+        NORMAL,
+        STICK,
+        BOMB
+    }
+
 }
