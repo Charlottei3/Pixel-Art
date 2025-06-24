@@ -74,7 +74,7 @@ public class GetCameraImage : MonoBehaviour
     private IEnumerator AskForPermissions()
     {
 
-#if UNITY_ANDROID
+        //#if UNITY_ANDROID
         List<bool> permissions = new List<bool>() { false, false, false };
         List<bool> permissionsAsked = new List<bool>() { false, false, false };
         List<Action> actions = new List<Action>()
@@ -127,7 +127,7 @@ public class GetCameraImage : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         TurnOnCam(0);
-#endif
+        //#endif
 
     }
     public void Reqquest()

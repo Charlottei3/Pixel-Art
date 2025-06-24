@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 using System.Collections;
 //using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
@@ -12,11 +12,11 @@ public static class Data
     public static PlayerData gameData = new PlayerData();
     public static void Save()
     {
-        string data = JsonConvert.SerializeObject(gameData, Formatting.Indented, new JsonSerializerSettings
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        });//ma hoa data thanh json//cho phepluu anh 2 chieu
-        PlayerPrefs.SetString(saveData, data);  // tap PlayerPrefs cho json
+        //string data = JsonConvert.SerializeObject(gameData, Formatting.Indented, new JsonSerializerSettings
+        //{
+        //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        //});//ma hoa data thanh json//cho phepluu anh 2 chieu
+        //PlayerPrefs.SetString(saveData, data);  // tap PlayerPrefs cho json
     }
     public static void Load()
     {
@@ -27,8 +27,8 @@ public static class Data
         else
         {
             var data = PlayerPrefs.GetString(saveData);//if co roi thi lay ra
-            var readData = JsonConvert.DeserializeObject<PlayerData>(data);//
-            gameData = readData;//lay ra game data
+            //var readData = JsonConvert.DeserializeObject<PlayerData>(data);//
+            //gameData = readData;//lay ra game data
 
         }
     }

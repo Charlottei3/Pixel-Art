@@ -12,6 +12,12 @@ public class TabScripts : MonoBehaviour
     public TextMeshProUGUI titleText;
     public int i = 0;
 
+    private void Start()
+    {
+        TurnOnButton(1);
+        TurnOnTab(1);
+    }
+
     public void TurnOnButton(int tab)
     {
 
